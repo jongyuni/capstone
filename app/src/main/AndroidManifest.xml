@@ -13,9 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".DiaryDayView"></activity>
+        <activity android:name=".CalDiaView" />
         <activity
             android:name=".MenuActivity"
-            android:label="@string/title_activity_menu"></activity>
+            android:label="@string/title_activity_menu" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" /> <!-- Splash Activity -->
         <activity
@@ -26,10 +28,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Splash Activity -->
-        <activity
-            android:name=".SubActivity"
-            tools:ignore="DuplicateActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1092152024105",
+    "firebase_url": "https://drawforyou-51628.firebaseio.com",
+    "project_id": "drawforyou-51628",
+    "storage_bucket": "drawforyou-51628.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092152024105:android:8da9e9fccdba0b2e7ed038",
+        "android_client_info": {
+          "package_name": "com.example.draw4u"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092152024105-33u2lb824mdghc4q9psd10ni1tpl49ss.apps.googleusercontent.com",
+          "client_type": 3,
+          "android_info": {
+            "package_name": "com.example.draw4u",
+            "certificate_hash": "172ceac3899e0165f51abc2218afa626139ca639"
+          }
+        },
+        {
+          "client_id": "1092152024105-mvr7pkkone3fm2tgt6eomu3mb2k5r4io.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8PVQKIIeUUOFIcsKbT6GNl220vu2pIFQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092152024105-mvr7pkkone3fm2tgt6eomu3mb2k5r4io.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
