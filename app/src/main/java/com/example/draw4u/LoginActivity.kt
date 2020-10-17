@@ -36,6 +36,10 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
         //btn_googleSignIn.setOnClickListener (this) // 구글 로그인 버튼
         btn_googleSignIn.setOnClickListener {signIn()}
 
+        btn_login.setOnClickListener{generalLogIn()}//일반 로그인
+
+        btn_signup.setOnClickListener{startActivity(Intent(this, SignUpActivity::class.java))}//회원 가입
+
         //Google 로그인 옵션 구성. requestIdToken 및 Email 요청
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -111,6 +115,29 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
     override fun onClick(p0: View?) {
     }
 
+    private fun generalLogIn(){
+        var email = edtEmail.text.toString()
+        var password = edtPassword.text.toString()
+        if (email.length<1 || password.length<1 ) {
+            var toast = Toast.makeText(this, "입력이 제대로 안 됐습니다.", Toast.LENGTH_SHORT)
+            toast.show()
+        }else {
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        toMainActivity(firebaseAuth?.currentUser)
+                        finish()
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(
+                            baseContext, "Authentication failed.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        //updateUI(null)
+                    }
+                }
+        }
+    }
 
     private fun signOut() { // 로그아웃
         // Firebase sign out

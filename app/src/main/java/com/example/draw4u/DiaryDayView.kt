@@ -75,7 +75,7 @@ class DiaryDayView : AppCompatActivity() {
             ?.addOnSuccessListener {
                     documentSnapshot ->
                 val tempdiaryinfo =  documentSnapshot.toObject(DiaryInfo::class.java)
-                if (tempdiaryinfo != null) {
+                if (tempdiaryinfo != null) {//이미 씌여진 일기가 있다면
                     str = tempdiaryinfo.diary.toString()
                     contextEditText.visibility = View.INVISIBLE
                     textView2.visibility = View.VISIBLE
@@ -125,6 +125,7 @@ class DiaryDayView : AppCompatActivity() {
         var content: String = contextEditText.getText().toString()
         var tempdiaryinfo = DiaryInfo()
         tempdiaryinfo.diary = content
+        tempdiaryinfo.date = fname
 
         fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.set(tempdiaryinfo)
 
