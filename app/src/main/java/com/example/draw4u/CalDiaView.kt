@@ -20,12 +20,12 @@ class CalDiaView : AppCompatActivity() {
         fbFirestore = FirebaseFirestore.getInstance()
 
         calendarView.setOnDateChangeListener {view, year, month, dayOfMonth ->
-            // 달력 날짜가 선택되면
+            // 달력에서 날짜 선택
             val intent = Intent(this, DiaryDayView::class.java)
             intent.putExtra("year", year)
             intent.putExtra("month", month)
             intent.putExtra("dayOfMonth", dayOfMonth)
-            startActivity(intent)//선택된 날짜로 이동
+            startActivity(intent)//선택한 날짜로 이동 및 날짜 정보 전송
         }
         
     }

@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".SelectKeyword"></activity>
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".DiaryDayView" />
         <activity android:name=".CalDiaView" />
         <activity
