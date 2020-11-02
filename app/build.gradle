@@ -58,5 +58,13 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
     implementation 'com.google.firebase:firebase-firestore:21.2.1'
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    implementation 'org.conscrypt:conscrypt-android:2.5.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 
 }

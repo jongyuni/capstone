@@ -125,14 +125,18 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        toMainActivity(firebaseAuth?.currentUser)
-                        finish()
+                        if(firebaseAuth.currentUser?.isEmailVerified!!){
+                            toMainActivity(firebaseAuth?.currentUser)
+                            finish()
+                        }
+                        else{
+                            var toast = Toast.makeText(baseContext, "이메일 인증을 해주세요", Toast.LENGTH_SHORT)
+                            toast.show()
+                        }
                     } else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(
-                            baseContext, "Authentication failed.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        var toast = Toast.makeText(baseContext, "로그인 실패", Toast.LENGTH_SHORT)
+                        toast.show()
                         //updateUI(null)
                     }
                 }

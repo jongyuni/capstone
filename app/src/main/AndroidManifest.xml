@@ -4,6 +4,7 @@
     package="com.example.draw4u">
     <!-- 인터넷 권한 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"
@@ -12,14 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".SelectKeyword"></activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".DiaryDayView" />
         <activity android:name=".CalDiaView" />
-        <activity
-            android:name=".MenuActivity"
-            android:label="@string/title_activity_menu" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" /> <!-- Splash Activity -->
         <activity

@@ -11,6 +11,7 @@ class CalDiaView : AppCompatActivity() {
 
     var fbAuth : FirebaseAuth? = null
     var fbFirestore : FirebaseFirestore? = null
+    var fname: String = "" //일기 저장을 위한 파일 이름 - 날짜 형식
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,10 +22,18 @@ class CalDiaView : AppCompatActivity() {
 
         calendarView.setOnDateChangeListener {view, year, month, dayOfMonth ->
             // 달력에서 날짜 선택
+
+            if(dayOfMonth < 10){
+                fname = "" + year + "-" + (month + 1) + "" + "-0" + dayOfMonth
+            }else{
+                fname = "" + year + "-" + (month + 1) + "" + "-" + dayOfMonth
+            }//일기 이름 설정. Ex) 2020-10-01, 2020-10-10
+
             val intent = Intent(this, DiaryDayView::class.java)
-            intent.putExtra("year", year)
+            /*intent.putExtra("year", year)
             intent.putExtra("month", month)
-            intent.putExtra("dayOfMonth", dayOfMonth)
+            intent.putExtra("dayOfMonth", dayOfMonth)*/
+            intent.putExtra("fname",fname)
             startActivity(intent)//선택한 날짜로 이동 및 날짜 정보 전송
         }
         
