@@ -105,6 +105,8 @@ class DiaryDayView : AppCompatActivity() {
 
     fun checkedDay(fname: String) {
 
+        var keyword: String=""
+
        /* if(cDay < 10){
             fname = "" + cYear + "-" + (cMonth + 1) + "" + "-0" + cDay
         }else{
@@ -131,8 +133,10 @@ class DiaryDayView : AppCompatActivity() {
                     tempdiaryinfo.keyword3 = diaryinfo.keyword3
                     //Log.d("diaryinfo.keyword1" , diaryinfo.keyword1.toString())
                     //Log.d("tempdiaryinfo.keyword1", tempdiaryinfo.keyword1.toString())
+                    keyword = "#" + tempdiaryinfo.keyword1 + " #" + tempdiaryinfo.keyword2 + " #" + tempdiaryinfo.keyword3
                     Picasso.get().load(url_str).into(imageView)
-
+                    KeywordView.text = "${keyword}"
+                    KeywordView.visibility = View.VISIBLE
                     save_Btn.visibility = View.INVISIBLE
                     mod_Btn.visibility = View.VISIBLE
                     del_Btn.visibility = View.VISIBLE
@@ -140,6 +144,7 @@ class DiaryDayView : AppCompatActivity() {
                     mod_Btn.setOnClickListener {
                         contextEditText.visibility = View.VISIBLE
                         textView2.visibility = View.INVISIBLE
+                        KeywordView.visibility = View.INVISIBLE
                         contextEditText.setText(str) // editText에 textView에 저장된 내용을 출력
                         save_Btn.visibility = View.VISIBLE
                         keyword_Btn.visibility = View.VISIBLE
@@ -154,6 +159,7 @@ class DiaryDayView : AppCompatActivity() {
                         contextEditText.visibility = View.VISIBLE
                         save_Btn.visibility = View.VISIBLE
                         keyword_Btn.visibility = View.VISIBLE
+                        KeywordView.visibility = View.INVISIBLE
                         mod_Btn.visibility = View.INVISIBLE
                         del_Btn.visibility = View.INVISIBLE
                         removeDiary(fname)
@@ -162,7 +168,7 @@ class DiaryDayView : AppCompatActivity() {
                 else{
                     str = ""
                     textView2.visibility = View.INVISIBLE
-                    //diaryTextView.visibility = View.VISIBLE
+                    KeywordView.visibility = View.INVISIBLE
                     save_Btn.visibility = View.VISIBLE
                     keyword_Btn.visibility = View.VISIBLE
                     mod_Btn.visibility = View.INVISIBLE
