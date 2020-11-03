@@ -44,12 +44,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
-        android:hint="내용을 입력하세요."
+        android:hint="오늘은 어떤 하루를 보냈나요?"
         android:inputType="textMultiLine"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/diaryTextView"
+        app:layout_constraintTop_toBottomOf="@+id/KeywordView"
         tools:ignore="UnknownId" /><!--일기 작성 공간-->
 
     <TextView
