@@ -38,7 +38,7 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
         //firebase auth 객체
         firebaseAuth = FirebaseAuth.getInstance()
 
-        /*// SharedPreferences 안에 값이 저장되어 있지 않을 때 -> Login
+        // SharedPreferences 안에 값이 저장되어 있지 않을 때 -> Login
         if(MySharedPreferences.getUserId(this).isNullOrBlank()
             || MySharedPreferences.getUserPass(this).isNullOrBlank()) {
         }
@@ -47,7 +47,7 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
                 val intent = Intent(this, MainActivity::class.java)
             toMainActivity(firebaseAuth?.currentUser)
             finish()
-        }*/
+        }
 
         //btn_googleSignIn.setOnClickListener (this) // 구글 로그인 버튼
         btn_googleSignIn.setOnClickListener {signIn()}
@@ -83,8 +83,6 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
                      //취소일 때 아무 액션이 없으므로 빈칸
                 }
                 .show()
-           /* val intent = Intent(this, FindPWActivity::class.java)
-            startActivityForResult(intent,1)*/
         }//비밀번호 찾기 팝업창
 
         //Google 로그인 옵션 구성. requestIdToken 및 Email 요청
