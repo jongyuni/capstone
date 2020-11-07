@@ -3,6 +3,11 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="navigation_color_add">#6200EE</color>
+    <color name="navigation_color_mood">#C9379D</color>
+    <color name="navigation_color_habit">#E6A919</color>
+    <color name="navigation_color_chart">#008577</color>
+    <color name="navigation_color_profile">#1194AA</color>
 </resources>

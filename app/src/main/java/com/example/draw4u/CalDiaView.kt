@@ -30,9 +30,6 @@ class CalDiaView : AppCompatActivity() {
             }//일기 이름 설정. Ex) 2020-10-01, 2020-10-10
 
             val intent = Intent(this, DiaryDayView::class.java)
-            /*intent.putExtra("year", year)
-            intent.putExtra("month", month)
-            intent.putExtra("dayOfMonth", dayOfMonth)*/
             intent.putExtra("fname",fname)
             startActivity(intent)//선택한 날짜로 이동 및 날짜 정보 전송
         }

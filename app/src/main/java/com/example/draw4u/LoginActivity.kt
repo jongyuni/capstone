@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -33,12 +35,57 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        //firebase auth 객체
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        /*// SharedPreferences 안에 값이 저장되어 있지 않을 때 -> Login
+        if(MySharedPreferences.getUserId(this).isNullOrBlank()
+            || MySharedPreferences.getUserPass(this).isNullOrBlank()) {
+        }
+        else { // SharedPreferences 안에 값이 저장되어 있을 때 -> MainActivity로 이동
+            Toast.makeText(this, "${MySharedPreferences.getUserId(this)}님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+            toMainActivity(firebaseAuth?.currentUser)
+            finish()
+        }*/
+
         //btn_googleSignIn.setOnClickListener (this) // 구글 로그인 버튼
         btn_googleSignIn.setOnClickListener {signIn()}
 
         btn_login.setOnClickListener{generalLogIn()}//일반 로그인
 
         btn_signup.setOnClickListener{startActivity(Intent(this, SignUpActivity::class.java))}//회원 가입
+
+        btn_findPW.setOnClickListener{
+            val builder = AlertDialog.Builder(this)
+            val dialogView = layoutInflater.inflate(R.layout.activity_find_p_w, null)
+            val dialogText = dialogView.findViewById<EditText>(R.id.EmailAddress)
+
+            builder.setView(dialogView)
+                .setPositiveButton("확인") { dialogInterface, i ->
+                    firebaseAuth?.sendPasswordResetEmail(dialogText.text.toString())
+                        ?.addOnCompleteListener(this){
+                            Log.d("LoginActivity", "songkiwoong")
+                            if(it.isSuccessful){
+                                //비밀번호 재설정 메일을 보내기가 성공했을때 이벤트
+                                var toast = Toast.makeText(this, "메일을 확인해주세요.", Toast.LENGTH_SHORT)
+                                toast.show()
+                            }
+                            else{
+                                var toast = Toast.makeText(this, "입력이 제대로 안 됐습니다.", Toast.LENGTH_SHORT)
+                                toast.show()
+                            }
+                        }
+                     //확인일 때 main의 View의 값에 dialog View에 있는 값을 적용
+
+                }
+                .setNegativeButton("취소") { dialogInterface, i ->
+                     //취소일 때 아무 액션이 없으므로 빈칸
+                }
+                .show()
+           /* val intent = Intent(this, FindPWActivity::class.java)
+            startActivityForResult(intent,1)*/
+        }//비밀번호 찾기 팝업창
 
         //Google 로그인 옵션 구성. requestIdToken 및 Email 요청
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -48,8 +95,6 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        //firebase auth 객체
-        firebaseAuth = FirebaseAuth.getInstance()
     }
 
     // onStart. 유저가 앱에 이미 구글 로그인을 했는지 확인
@@ -100,7 +145,8 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
     // toMainActivity
     fun toMainActivity(user: FirebaseUser?) {
         if(user !=null) { // MainActivity 로 이동
-            startActivity(Intent(this, CalDiaView::class.java))
+            //startActivity(Intent(this, CalDiaView::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     } // toMainActivity End
@@ -118,7 +164,7 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
     private fun generalLogIn(){
         var email = edtEmail.text.toString()
         var password = edtPassword.text.toString()
-        if (email.length<1 || password.length<1 ) {
+        if (email.length < 1 || password.length < 1 ) {
             var toast = Toast.makeText(this, "입력이 제대로 안 됐습니다.", Toast.LENGTH_SHORT)
             toast.show()
         }else {
@@ -126,8 +172,17 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         if(firebaseAuth.currentUser?.isEmailVerified!!){
-                            toMainActivity(firebaseAuth?.currentUser)
-                            finish()
+                            if(switch1.isChecked){//자동 로그인 스위치 ON
+                                MySharedPreferences.setUserId(this, email)
+                                MySharedPreferences.setUserPass(this, password)
+                                toMainActivity(firebaseAuth?.currentUser)
+                                finish()
+                            }
+                            else{//자동 로그인 스위치 OFF
+                                toMainActivity(firebaseAuth?.currentUser)
+                                finish()
+                            }
+
                         }
                         else{
                             var toast = Toast.makeText(baseContext, "이메일 인증을 해주세요", Toast.LENGTH_SHORT)
@@ -141,9 +196,9 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
                     }
                 }
         }
-    }
+    }//일반 로그인
 
-    private fun signOut() { // 로그아웃
+    private fun signOut() { 
         // Firebase sign out
         firebaseAuth.signOut()
 
@@ -151,14 +206,14 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
         googleSignInClient.signOut().addOnCompleteListener(this) {
             //updateUI(null)
         }
-    }
+    }//구글 로그아웃
 
-    private fun revokeAccess() { //회원탈퇴
+    private fun revokeAccess() {
         // Firebase sign out
         firebaseAuth.signOut()
         googleSignInClient.revokeAccess().addOnCompleteListener(this) {
 
         }
-    }
+    } //구글 회원탈퇴
 
 }

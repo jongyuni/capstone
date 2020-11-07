@@ -29,9 +29,9 @@ class DiaryDayView : AppCompatActivity() {
     var fname: String = "" //일기 저장을 위한 파일 이름 - 날짜 형식
     var str: String = "" //일기 저장을 위한 String
 
-    var year: Int = 0
+    /*var year: Int = 0
     var month: Int = 0
-    var dayOfMonth: Int = 0 //사용자가 선택한 날짜
+    var dayOfMonth: Int = 0 //사용자가 선택한 날짜*/
 
     var fbAuth : FirebaseAuth? = null
     var fbFirestore : FirebaseFirestore? = null
