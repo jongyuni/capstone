@@ -47,33 +47,33 @@ class DiaryDayView : AppCompatActivity() {
             Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
         }//일기 날짜 저장
 
-        textView3.text = String.format(fname)
+        dateView.text = String.format(fname)
         contextEditText.setText("") // EditText에 공백값 넣기
         checkedDay(fname) //일기 써있는지 확인
 
         save_Btn.setOnClickListener{// 저장 Button이 클릭되면
             saveDiary(fname) // saveDiary 메소드 호출
             str = contextEditText.getText().toString() // str 변수에 edittext내용을 toString형으로 저장
-            textView2.text = "${str}" // textView에 str 출력
-            save_Btn.visibility = View.INVISIBLE
-            keyword_Btn.visibility = View.INVISIBLE
+            diaryView.text = "${str}" // textView에 str 출력
+            save_Btn.visibility = View.GONE
+            keyword_Btn.visibility = View.GONE
             mod_Btn.visibility = View.VISIBLE
             del_Btn.visibility = View.VISIBLE
-            contextEditText.visibility = View.INVISIBLE
-            textView2.visibility = View.VISIBLE
+            contextEditText.visibility = View.GONE
+            diaryView.visibility = View.VISIBLE
         }//일기 저장 버튼 클릭시
 
         keyword_Btn.setOnClickListener {//키워드 추출 Button이 클릭되면
             saveDiary(fname)// saveDiary 메소드 호출
             makeKeyword(fname) //keyword 추출 메소드 호출
             str = contextEditText.getText().toString() // str 변수에 edittext내용을 toString형으로 저장
-            textView2.text = "${str}" // textView에 str 출력
-            save_Btn.visibility = View.INVISIBLE
-            keyword_Btn.visibility = View.INVISIBLE
+            diaryView.text = "${str}" // textView에 str 출력
+            save_Btn.visibility = View.GONE
+            keyword_Btn.visibility = View.GONE
             mod_Btn.visibility = View.VISIBLE
             del_Btn.visibility = View.VISIBLE
-            contextEditText.visibility = View.INVISIBLE
-            textView2.visibility = View.VISIBLE
+            contextEditText.visibility = View.GONE
+            diaryView.visibility = View.VISIBLE
         }
 
     }
@@ -88,9 +88,9 @@ class DiaryDayView : AppCompatActivity() {
                 val diaryinfo =  documentSnapshot.toObject(DiaryInfo::class.java)
                 if (diaryinfo != null) {//이미 씌여진 일기가 있다면
                     str = diaryinfo.diary.toString()
-                    contextEditText.visibility = View.INVISIBLE
-                    textView2.visibility = View.VISIBLE
-                    textView2.text = "${str}" // textView에 str 출력
+                    contextEditText.visibility = View.GONE
+                    diaryView.visibility = View.VISIBLE
+                    diaryView.text = "${str}" // textView에 str 출력
                     imageView.visibility = View.VISIBLE
                     val url_str : String = diaryinfo.imageURL.toString()
                     val new_str = "\"" + url_str + "\""
@@ -106,42 +106,43 @@ class DiaryDayView : AppCompatActivity() {
                     Picasso.get().load(url_str).into(imageView)
                     KeywordView.text = "${keyword}"
                     KeywordView.visibility = View.VISIBLE
-                    save_Btn.visibility = View.INVISIBLE
+                    save_Btn.visibility = View.GONE
+                    keyword_Btn.visibility = View.GONE
                     mod_Btn.visibility = View.VISIBLE
                     del_Btn.visibility = View.VISIBLE
 
                     mod_Btn.setOnClickListener {
                         contextEditText.visibility = View.VISIBLE
-                        textView2.visibility = View.INVISIBLE
-                        KeywordView.visibility = View.INVISIBLE
+                        diaryView.visibility = View.GONE
+                        KeywordView.visibility = View.GONE
                         contextEditText.setText(str) // editText에 textView에 저장된 내용을 출력
                         save_Btn.visibility = View.VISIBLE
                         keyword_Btn.visibility = View.VISIBLE
-                        mod_Btn.visibility = View.INVISIBLE
-                        del_Btn.visibility = View.INVISIBLE
-                        textView2.text = "${contextEditText.getText()}"
+                        mod_Btn.visibility = View.GONE
+                        del_Btn.visibility = View.GONE
+                        diaryView.text = "${contextEditText.getText()}"
                     }// 수정 버튼을 누를 시
 
                     del_Btn.setOnClickListener {
-                        textView2.visibility = View.INVISIBLE
+                        diaryView.visibility = View.GONE
                         contextEditText.setText("")
                         contextEditText.visibility = View.VISIBLE
                         save_Btn.visibility = View.VISIBLE
                         keyword_Btn.visibility = View.VISIBLE
                         KeywordView.visibility = View.INVISIBLE
-                        mod_Btn.visibility = View.INVISIBLE
-                        del_Btn.visibility = View.INVISIBLE
+                        mod_Btn.visibility = View.GONE
+                        del_Btn.visibility = View.GONE
                         removeDiary(fname)
                     }//삭제 버튼 클릭시
                 }//저장된 일기가 있을때
                 else{
                     str = ""
-                    textView2.visibility = View.INVISIBLE
-                    KeywordView.visibility = View.INVISIBLE
+                    diaryView.visibility = View.GONE
+                    KeywordView.visibility = View.GONE
                     save_Btn.visibility = View.VISIBLE
                     keyword_Btn.visibility = View.VISIBLE
-                    mod_Btn.visibility = View.INVISIBLE
-                    del_Btn.visibility = View.INVISIBLE
+                    mod_Btn.visibility = View.GONE
+                    del_Btn.visibility = View.GONE
                     contextEditText.visibility = View.VISIBLE
                 }//저장된 일기가 없을때
             }//일기 내용 불러오기

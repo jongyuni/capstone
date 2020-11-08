@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/dateView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -33,34 +33,19 @@
             android:visibility="invisible"
             /><!--저장된 이미지 출력-->
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/KeywordView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_addImage"
-                android:visibility="invisible"
-                android:text="사진"
-                />
-            <TextView
-                android:id="@+id/KeywordView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity= "center"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:visibility="invisible"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                /><!--키워드 뷰-->
-
-        </LinearLayout>
-
+            android:layout_gravity="center"
+            android:gravity= "center"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:visibility="invisible"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            /><!--키워드 뷰-->
 
     </LinearLayout>
 
@@ -85,14 +70,14 @@
             /><!--일기 작성 공간-->
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/diaryView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="180dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:visibility="invisible"
+            android:visibility="gone"
             /><!--저장된 일기 출력-->
 
     </LinearLayout>
@@ -128,7 +113,7 @@
             android:text="수정"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
+            android:visibility="gone"
             /><!--수정 버튼-->
 
         <Button
@@ -136,7 +121,7 @@
             android:text="삭제"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
+            android:visibility="gone"
             /><!--삭제 버튼-->
 
     </LinearLayout>

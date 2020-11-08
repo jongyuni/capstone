@@ -4,6 +4,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/diary" /> <!--app logo-->
+            android:src="@drawable/applogo" /> <!--app logo-->
     </item>
 </layer-list>
