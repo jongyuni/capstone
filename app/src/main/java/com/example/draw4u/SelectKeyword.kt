@@ -152,7 +152,7 @@ class SelectKeyword : AppCompatActivity() {
             .build()
 
         val builder: Retrofit.Builder = Retrofit.Builder()
-            .baseUrl("http://34.64.68.254:8000/")
+            .baseUrl("http://34.64.108.156:8000/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
 

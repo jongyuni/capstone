@@ -177,8 +177,13 @@ class DiaryDayView : AppCompatActivity() {
 
         var content = tempdiaryinfo.diary
 
-        val builder: Retrofit.Builder = Retrofit.Builder()
-            .baseUrl("http://34.64.68.254:8000/")
+        val intent1 = Intent(this, ExtractKeyword::class.java)
+        intent1.putExtra("fname", fname)
+        intent1.putExtra("content",content)
+        startActivity(intent1)
+
+        /*val builder: Retrofit.Builder = Retrofit.Builder()
+            .baseUrl("http://34.64.108.156:8000/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
 
@@ -211,15 +216,15 @@ class DiaryDayView : AppCompatActivity() {
 
                 fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.set(tempdiaryinfo)
             }//서버 통신 성공시 키워드 추출
-        })
+        })*/
 
-        var id= fbAuth?.uid.toString()
+        /*var id= fbAuth?.uid.toString()
         Log.d("CometChatAPI::", fbAuth?.uid.toString())
         val intent = Intent(this, SelectKeyword::class.java)
         intent.putExtra("fname", fname)
         intent.putExtra("uid",id)
         Handler().postDelayed({startActivity(intent)},5000)
-        finish()
+        finish()*/
 
 
     }
