@@ -7,8 +7,11 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -38,8 +41,6 @@ class SelectKeyword : AppCompatActivity() {
     var keyword2: String = ""
     var keyword3: String = ""
 
-    //var tempdiaryinfo = DiaryInfo()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_keyword)
@@ -58,9 +59,6 @@ class SelectKeyword : AppCompatActivity() {
             Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
         }//유저 정보
 
-        Log.d("CometChatAPI::", fname)
-        Log.d("CometChatAPI::", uid)
-
         fbFirestore?.collection(uid)?.document(fname)?.get()
             ?.addOnSuccessListener { document ->
                 val tempdiaryinfo =  document.toObject(DiaryInfo::class.java)
@@ -70,10 +68,9 @@ class SelectKeyword : AppCompatActivity() {
                     this.keyword2 = tempdiaryinfo.keyword2.toString()
                     this.keyword3 = tempdiaryinfo.keyword3.toString()
                     Log.d("CometChatAPI::", this.keyword1)
-
-                    edit_Keyword1.setText(this.keyword1)
-                    edit_Keyword2.setText(this.keyword2)
-                    edit_Keyword3.setText(this.keyword3)
+                    Keyword1.setText(this.keyword1)
+                    Keyword2.setText(this.keyword2)
+                    Keyword3.setText(this.keyword3)
 
                 }//키워드 저장
                 else{
@@ -84,33 +81,16 @@ class SelectKeyword : AppCompatActivity() {
                 Log.d("CometChatAPI::", "fail here")
             }
 
-        save_Keyword1.setOnClickListener(){
-            this.keyword1 = edit_Keyword1.getText().toString()
-            fbFirestore?.collection(uid)?.document(fname)?.update("keyword1",this.keyword1)
-                ?.addOnSuccessListener{}
-                ?.addOnFailureListener{}
-        }
-        save_Keyword2.setOnClickListener(){
-            this.keyword2 = edit_Keyword2.getText().toString()
-            fbFirestore?.collection(uid)?.document(fname)?.update("keyword2",this.keyword2)
-                ?.addOnSuccessListener{}
-                ?.addOnFailureListener{}
-        }
+        Keyword1.setOnClickListener(){
+            //makeImage(fname, uid, this.keyword1)
+            val intent =  Intent(this, DrawingActivity::class.java)
+            startActivity(intent)
 
-        save_Keyword3.setOnClickListener(){
-            this.keyword3 = edit_Keyword3.getText().toString()
-            fbFirestore?.collection(uid)?.document(fname)?.update("keyword3",this.keyword3)
-                ?.addOnSuccessListener{}
-                ?.addOnFailureListener{}
         }
-
-        sel_Keyword1.setOnClickListener(){
-            makeImage(fname, uid, this.keyword1)
-        }
-        sel_Keyword2.setOnClickListener(){
+        Keyword2.setOnClickListener(){
             makeImage(fname, uid, this.keyword2)
         }
-        sel_Keyword3.setOnClickListener(){
+        Keyword3.setOnClickListener(){
             makeImage(fname, uid, this.keyword3)
         }
     }
@@ -119,9 +99,7 @@ class SelectKeyword : AppCompatActivity() {
         fbAuth = FirebaseAuth.getInstance()
         fbFirestore = FirebaseFirestore.getInstance()
 
-        Log.d("CometChatAPI::", "result_image")
-
-        fbFirestore?.collection(uid)?.document(fname)?.update("imageURL","http://34.64.68.254:8000/static/result.png")
+        /*fbFirestore?.collection(uid)?.document(fname)?.update("imageURL","http://34.64.68.254:8000/static/result.png")
             ?.addOnSuccessListener{}
             ?.addOnFailureListener{}
 
@@ -131,7 +109,7 @@ class SelectKeyword : AppCompatActivity() {
         //intent.putExtra("fname",fname)
         startActivity(intent)
         finish()
-        //Handler().postDelayed({startActivity(intent)},5000)
+        //Handler().postDelayed({startActivity(intent)},5000)*/
 
 
     }
@@ -177,7 +155,6 @@ class SelectKeyword : AppCompatActivity() {
                 var compa: String = "ResultImage(message=No value!)"
 
                 if(result_image.equals(compa)){
-                    Log.d("CometChatAPI::", "______")
                     Toast.makeText(this@SelectKeyword,"대상 이미지가 없습니다.",Toast.LENGTH_SHORT).show()
                 }
                 else{

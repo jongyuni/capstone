@@ -8,8 +8,8 @@ import retrofit2.http.Url
 
 
 interface RetrofitService {
-    @GET("keyword_abstract/{content}")
-    fun getkeyword(@Path("content") content: String?): Call<ResultKeyword>
+    @GET("keyword_abstract/")
+    fun getkeyword(): Call<ResultKeyword>
 
     @GET("picture/{keyword}")
     fun getimage(@Path("keyword") keyword: String?): Call<ResultImage>

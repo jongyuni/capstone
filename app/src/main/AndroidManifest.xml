@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.draw4u" >
+    package="com.example.draw4u">
     <!-- 인터넷 권한 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -14,8 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning" >
-        <activity android:name=".ExtractKeyword"/>
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".DrawingActivity"></activity>
+        <activity android:name=".ExtractKeyword" />
         <activity android:name=".SelectKeyword" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".DiaryDayView" />
@@ -24,7 +25,7 @@
         <activity android:name=".MainActivity" /> <!-- Splash Activity -->
         <activity
             android:name=".Splash"
-            android:theme="@style/SplashTheme" >
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
