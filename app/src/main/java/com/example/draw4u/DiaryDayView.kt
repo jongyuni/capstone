@@ -29,10 +29,6 @@ class DiaryDayView : AppCompatActivity() {
     var fname: String = "" //일기 저장을 위한 파일 이름 - 날짜 형식
     var str: String = "" //일기 저장을 위한 String
 
-    /*var year: Int = 0
-    var month: Int = 0
-    var dayOfMonth: Int = 0 //사용자가 선택한 날짜*/
-
     var fbAuth : FirebaseAuth? = null
     var fbFirestore : FirebaseFirestore? = null
 
@@ -45,36 +41,15 @@ class DiaryDayView : AppCompatActivity() {
         fbAuth = FirebaseAuth.getInstance()
         fbFirestore = FirebaseFirestore.getInstance()
 
-        /*if(intent.hasExtra("year")){
-            year = intent.getIntExtra("year",0)
-        }else{
-            Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
-        }//연도 저장
-
-        if(intent.hasExtra("month")){
-            month = intent.getIntExtra("month",0)
-        }else{
-            Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
-        }//월 저장
-
-        if(intent.hasExtra("dayOfMonth")){
-            dayOfMonth = intent.getIntExtra("dayOfMonth",0)
-        }else{
-            Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
-        }//일 저장*/
-
         if(intent.hasExtra("fname")){
             fname = intent.getStringExtra("fname").toString()
         }else{
             Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
-        }//일 저장*/
-        
-        //diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth) // 날짜를 보여주는 텍스트에 해당 날짜를 넣는다.
-        //textView3.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth) // 날짜를 보여주는 텍스트에 해당 날짜를 넣는다.
+        }//일기 날짜 저장
+
         textView3.text = String.format(fname)
         contextEditText.setText("") // EditText에 공백값 넣기
-        //checkedDay(year, month, dayOfMonth) // checkedDay 메소드 호출
-        checkedDay(fname)
+        checkedDay(fname) //일기 써있는지 확인
 
         save_Btn.setOnClickListener{// 저장 Button이 클릭되면
             saveDiary(fname) // saveDiary 메소드 호출
@@ -88,7 +63,7 @@ class DiaryDayView : AppCompatActivity() {
             textView2.visibility = View.VISIBLE
         }//일기 저장 버튼 클릭시
 
-        keyword_Btn.setOnClickListener {
+        keyword_Btn.setOnClickListener {//키워드 추출 Button이 클릭되면
             saveDiary(fname)// saveDiary 메소드 호출
             makeKeyword(fname) //keyword 추출 메소드 호출
             str = contextEditText.getText().toString() // str 변수에 edittext내용을 toString형으로 저장
@@ -106,12 +81,6 @@ class DiaryDayView : AppCompatActivity() {
     fun checkedDay(fname: String) {
 
         var keyword: String=""
-
-       /* if(cDay < 10){
-            fname = "" + cYear + "-" + (cMonth + 1) + "" + "-0" + cDay
-        }else{
-            fname = "" + cYear + "-" + (cMonth + 1) + "" + "-" + cDay
-        }//일기 이름 설정. Ex) 2020-10-01, 2020-10-10*/
 
         fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.get()
             ?.addOnSuccessListener {

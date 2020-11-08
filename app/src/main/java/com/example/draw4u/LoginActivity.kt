@@ -49,14 +49,15 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
             finish()
         }
 
-        //btn_googleSignIn.setOnClickListener (this) // 구글 로그인 버튼
         btn_googleSignIn.setOnClickListener {signIn()}
 
         btn_login.setOnClickListener{generalLogIn()}//일반 로그인
 
-        btn_signup.setOnClickListener{startActivity(Intent(this, SignUpActivity::class.java))}//회원 가입
+        btn_signup.setOnClickListener{//회원 가입
+            startActivity(Intent(this, SignUpActivity::class.java))
+        }//회원 가입
 
-        btn_findPW.setOnClickListener{
+        btn_findPW.setOnClickListener{//비밀번호 찾기
             val builder = AlertDialog.Builder(this)
             val dialogView = layoutInflater.inflate(R.layout.activity_find_p_w, null)
             val dialogText = dialogView.findViewById<EditText>(R.id.EmailAddress)
@@ -100,7 +101,7 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if(account!==null){ // 이미 로그인 되어있을시 바로 메인 액티비티로 이동
-           // toMainActivity(firebaseAuth.currentUser)
+           toMainActivity(firebaseAuth.currentUser)
         }
     } //onStart End
 
@@ -143,7 +144,6 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
     // toMainActivity
     fun toMainActivity(user: FirebaseUser?) {
         if(user !=null) { // MainActivity 로 이동
-            //startActivity(Intent(this, CalDiaView::class.java))
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -196,7 +196,7 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
         }
     }//일반 로그인
 
-    private fun signOut() { 
+    fun signOut() {
         // Firebase sign out
         firebaseAuth.signOut()
 

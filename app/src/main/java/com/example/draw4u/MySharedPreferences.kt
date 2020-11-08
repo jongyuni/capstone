@@ -2,6 +2,7 @@ package com.example.draw4u
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.fragment.app.FragmentActivity
 
 object MySharedPreferences {
 
@@ -31,8 +32,8 @@ object MySharedPreferences {
         return prefs.getString("MY_PASS", "").toString()
     }
 
-    fun clearUser(context: Context) {
-        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+    fun clearUser(context: FragmentActivity?) {
+        val prefs : SharedPreferences = context!!.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         val editor : SharedPreferences.Editor = prefs.edit()
         editor.clear()
         editor.commit()
