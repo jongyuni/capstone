@@ -5,9 +5,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -26,78 +29,114 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PhotoFromPhone extends AppCompatActivity {
-
-    private static final String TAG = "MainActivity";
-
-    private Button btChoose;
-    private Button btUpload;
-    private ImageView ivPreview;
+public class SelectImage extends AppCompatActivity {
+    Button mDown;
+    ImageView mImgTrans;
+    Bitmap mBitmap;
+    Button phoneImage;
+    Button selGan;
     public String fname;
-
-    private Uri filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-        setContentView(R.layout.activity_photo_from_phone);
+        setContentView(R.layout.activity_select_image);
 
         Intent intent = getIntent();
         fname = intent.getExtras().getString("fname");
 
-        btChoose = (Button) findViewById(R.id.bt_choose);
-        btUpload = (Button) findViewById(R.id.bt_upload);
-        ivPreview = (ImageView) findViewById(R.id.iv_preview);
+        mDown = (Button) findViewById(R.id.btn_down);
+        mImgTrans = (ImageView) findViewById(R.id.imgTranslate);
+        phoneImage = (Button) findViewById(R.id.btn_imageFromPhone);
+        selGan = (Button) findViewById(R.id.btn_sel);
 
-        //버튼 클릭 이벤트
-        btChoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //이미지를 선택
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
+        //String image_url = "https://firebasestorage.googleapis.com/v0/b/drawforyou-51628.appspot.com/o/images%2F1gtanzcT5kcGkdPQVkEmRMbSG4x120201115_18011gtanzcT5kcGkdPQVkEmRMbSG4x1.png?alt=media";
+        String image_url = "https://lh3.googleusercontent.com/proxy/TygmmySA-qQg1PGz48QBCo2bFCI2U6Rn2sz4FQ5vnG1_jZ9EmZddhQ1ghmeoLffXMfj4K-KmpuoHDyR3ictvrrqSqLXe1Q";
+
+        mDown.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                new LoadImage()
+                        .execute(image_url);
+
             }
         });
-
-        btUpload.setOnClickListener(new View.OnClickListener() {
+        selGan.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 //업로드
                 uploadFile();
             }
         });
-    }
+        phoneImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PhotoFromPhone.class);
+                intent.putExtra("fname",fname);
+                startActivity(intent);
+                finish();
 
-    //결과 처리
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //request코드가 0이고 OK를 선택했고 data에 뭔가가 들어 있다면
-        if(requestCode == 0 && resultCode == RESULT_OK){
-            filePath = data.getData();
-            Log.d(TAG, "uri:" + String.valueOf(filePath));
+            }
+        });
+
+    }
+    private class LoadImage extends AsyncTask<String, String, Bitmap> {
+
+        ProgressDialog pDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(SelectImage.this);
+            pDialog.setMessage("이미지 로딩중입니다...");
+            pDialog.show();
+        }
+
+        protected Bitmap doInBackground(String... args) {
             try {
-                //Uri 파일을 Bitmap으로 만들어서 ImageView에 집어 넣는다.
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                ivPreview.setImageBitmap(bitmap);
-            } catch (IOException e) {
+                mBitmap = BitmapFactory
+                        .decodeStream((InputStream) new URL(args[0])
+                                .getContent());
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+            return mBitmap;
         }
+
+        protected void onPostExecute(Bitmap image) {
+
+            if (image != null) {
+                mImgTrans.setImageBitmap(image);
+                pDialog.dismiss();
+
+            } else {
+                pDialog.dismiss();
+                Toast.makeText(SelectImage.this, "이미지가 존재하지 않습니다.",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
+    private Uri getImageUri(Context context, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     //upload the file
     private void uploadFile() {
         //업로드할 파일이 있으면 수행
-        if (filePath != null) {
+        if (mBitmap != null) {
             //업로드 진행 Dialog 보이기
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("업로드중...");
@@ -121,7 +160,7 @@ public class PhotoFromPhone extends AppCompatActivity {
             String fileURL = "https://firebasestorage.googleapis.com/v0/b/drawforyou-51628.appspot.com/o/images%2F"
                     + currentUser.getUid()+ filename + "?alt=media";//firebase storage에 올린 주소
 
-            storageRef.putFile(filePath)
+            storageRef.putFile(this.getImageUri(this,mBitmap))
                     //성공시
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -147,7 +186,7 @@ public class PhotoFromPhone extends AppCompatActivity {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
-                             double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
+                                    double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
                             //dialog에 진행률을 퍼센트로 출력해 준다
                             progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
                         }
@@ -156,6 +195,4 @@ public class PhotoFromPhone extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }

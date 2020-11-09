@@ -5,37 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PhotoFromPhone">
-    <TextView
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:layout_margin="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello Storage!" />
-
-    <LinearLayout
-        android:gravity="center_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/bt_choose"
-            android:text="Choose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/bt_upload"
-            android:text="Upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    tools:context=".PhotoFromPhone"
+    android:background="@drawable/background">
 
     <!--이미지 출력-->
     <ImageView
         android:id="@+id/iv_preview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/bt_choose"
+        android:text="사진 가져오기"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/bt_upload"
+        android:text="사진 선택하기"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+
+
 </LinearLayout>

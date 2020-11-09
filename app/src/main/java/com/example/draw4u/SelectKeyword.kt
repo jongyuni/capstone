@@ -43,6 +43,8 @@ class SelectKeyword : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(supportActionBar != null)
+            supportActionBar?.hide()
         setContentView(R.layout.activity_select_keyword)
 
         fbFirestore = FirebaseFirestore.getInstance()
@@ -90,10 +92,15 @@ class SelectKeyword : AppCompatActivity() {
         Keyword2.setOnClickListener(){
             //makeImage(fname, uid, this.keyword2)
             val intent = Intent(this,PhotoFromPhone::class.java)
+            intent.putExtra("fname",fname)
             startActivity(intent)
         }
         Keyword3.setOnClickListener(){
-            makeImage(fname, uid, this.keyword3)
+            //makeImage(fname, uid, this.keyword3)
+            val intent = Intent(this,SelectImage::class.java)
+            intent.putExtra("fname",fname)
+            startActivity(intent)
+            finish()
         }
     }
 

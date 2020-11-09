@@ -1,5 +1,6 @@
 package com.example.draw4u
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -27,24 +28,26 @@ class ExtractKeyword : AppCompatActivity() {
         intent = getIntent()
         fname = intent.getStringExtra("fname")
         content = intent.getStringExtra("content")
-        Log.d("keyword","1")
+
         val jsonObject = JSONObject()
         try {
             jsonObject.put("diary", content)
-            Log.d("keyword","2")
         } catch (e: JSONException) {
             e.printStackTrace()
-            Log.d("keyword","3")
         }
         post(fname, jsonObject.toString())
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     fun post(fname: String?, jsonMessage: String?) {
-        Log.d("keyword","4")
+
         val requestURL = "http://34.64.108.156:8000/"
         val diarydate = fname
         val list2 = ArrayList<String>()
+
+        val intent = Intent()
+        setResult(Activity.RESULT_OK, intent)
+        finish()
 
         /*try {
             val client = OkHttpClient()
@@ -63,12 +66,11 @@ class ExtractKeyword : AppCompatActivity() {
                 //비동기 처리를 위해 Callback 구현
 
                 override fun onFailure(request: Request?, e: IOException?) {
-                    Log.d("keyword","5")
+
                 }
 
                 override fun onResponse(response: Response) {
 
-                    Log.d("keyword","6")
                     val parsing = response.body()?.string()
                     val list = ArrayList<String>()
                     val str:String = response.body().string()
@@ -78,7 +80,6 @@ class ExtractKeyword : AppCompatActivity() {
             })
         } catch (e: Exception) {
             System.err.println(e.toString())
-            Log.d("keyword","7")
         }*/
 
     }

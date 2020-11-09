@@ -1,35 +1,18 @@
 package com.example.draw4u
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_diary_day_view.*
-import okhttp3.MediaType
-import okhttp3.OkHttpClient
-import okhttp3.RequestBody
-import org.conscrypt.Conscrypt
-import org.json.JSONException
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-
-import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.reflect.Array
-import java.security.Security
-import java.util.concurrent.TimeUnit
 
 
 class DiaryDayView : AppCompatActivity() {
@@ -92,8 +75,7 @@ class DiaryDayView : AppCompatActivity() {
         var keyword: String=""
 
         fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.get()
-            ?.addOnSuccessListener {
-                    documentSnapshot ->
+            ?.addOnSuccessListener { documentSnapshot ->
                 val diaryinfo =  documentSnapshot.toObject(DiaryInfo::class.java)
                 if (diaryinfo != null) {//이미 씌여진 일기가 있다면
                     str = diaryinfo.diary.toString()
@@ -102,8 +84,6 @@ class DiaryDayView : AppCompatActivity() {
                     diaryView.text = "${str}" // textView에 str 출력
                     imageView.visibility = View.VISIBLE
                     val url_str : String = diaryinfo.imageURL.toString()
-                    val new_str = "\"" + url_str + "\""
-
                     tempdiaryinfo.diary =str
                     tempdiaryinfo.imageURL = url_str
                     tempdiaryinfo.keyword1 = diaryinfo.keyword1
@@ -111,7 +91,7 @@ class DiaryDayView : AppCompatActivity() {
                     tempdiaryinfo.keyword3 = diaryinfo.keyword3
 
                     keyword = "#" + tempdiaryinfo.keyword1 + " #" + tempdiaryinfo.keyword2 + " #" + tempdiaryinfo.keyword3
-                    Picasso.get().load(url_str).into(imageView)
+                    Glide.with(this).load(url_str).into(imageView)//이미지 출력
                     KeywordView.text = "${keyword}"
                     KeywordView.visibility = View.VISIBLE
                     save_Btn.visibility = View.GONE
@@ -267,12 +247,32 @@ class DiaryDayView : AppCompatActivity() {
 
         var id= fbAuth?.uid.toString()
         val intent = Intent(this, SelectKeyword::class.java)
+        //val intent = Intent(this,ExtractKeyword::class.java)
         intent.putExtra("fname", fname)
-        intent.putExtra("uid",id)
-        Handler().postDelayed({startActivity(intent)},3000)
-        finish()
+        intent.putExtra("uid", id)
+        //startActivityForResult(intent,100)
+        //업로드 진행 Dialog 보이기
+        /*val progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("업로드중...")
+        progressDialog.show()*/
 
+        Handler().postDelayed({ startActivity(intent) }, 3000)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                100 -> {
+                    //progressDialog.dismiss()
+                    val intent = Intent(this, SelectKeyword::class.java)
+                    intent.putExtra("fname", fname)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
     }
 
 }
