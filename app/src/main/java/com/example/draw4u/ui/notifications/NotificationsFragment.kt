@@ -31,8 +31,8 @@ class NotificationsFragment : Fragment() {
          val btn: Button = root.findViewById(R.id.btn_logout)
 
          btn.setOnClickListener{
+             //(activity as LoginActivity).signOut()
              MySharedPreferences.clearUser(activity)
-             (activity as LoginActivity).signOut()
              startActivity(Intent(activity, LoginActivity::class.java))
          }
     return root

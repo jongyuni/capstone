@@ -73,6 +73,10 @@ public class SelectImage extends AppCompatActivity {
             public void onClick(View v) {
                 //업로드
                 uploadFile();
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+
             }
         });
         phoneImage.setOnClickListener(new View.OnClickListener() {

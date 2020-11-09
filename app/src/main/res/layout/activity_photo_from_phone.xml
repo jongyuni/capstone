@@ -19,17 +19,26 @@
     <Button
         android:id="@+id/bt_choose"
         android:text="사진 가져오기"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:background="@drawable/buttonimage"
         android:layout_marginTop="50dp"
-        android:layout_gravity="center"/>
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:fontFamily="@font/kyobo"/>
 
     <Button
         android:id="@+id/bt_upload"
         android:text="사진 선택하기"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:background="@drawable/buttonimage"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:fontFamily="@font/kyobo"/>
 
 
 

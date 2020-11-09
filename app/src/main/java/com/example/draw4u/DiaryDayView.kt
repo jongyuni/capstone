@@ -51,6 +51,7 @@ class DiaryDayView : AppCompatActivity() {
             keyword_Btn.visibility = View.GONE
             mod_Btn.visibility = View.VISIBLE
             del_Btn.visibility = View.VISIBLE
+            scrollView.visibility = View.VISIBLE
             contextEditText.visibility = View.GONE
             diaryView.visibility = View.VISIBLE
         }//일기 저장 버튼 클릭시
@@ -64,6 +65,7 @@ class DiaryDayView : AppCompatActivity() {
             keyword_Btn.visibility = View.GONE
             mod_Btn.visibility = View.VISIBLE
             del_Btn.visibility = View.VISIBLE
+            scrollView.visibility = View.VISIBLE
             contextEditText.visibility = View.GONE
             diaryView.visibility = View.VISIBLE
         }
@@ -96,16 +98,19 @@ class DiaryDayView : AppCompatActivity() {
                     KeywordView.visibility = View.VISIBLE
                     save_Btn.visibility = View.GONE
                     keyword_Btn.visibility = View.GONE
+                    scrollView.visibility = View.VISIBLE
                     mod_Btn.visibility = View.VISIBLE
                     del_Btn.visibility = View.VISIBLE
 
                     mod_Btn.setOnClickListener {
+                        imageView.visibility = View.GONE
                         contextEditText.visibility = View.VISIBLE
                         diaryView.visibility = View.GONE
                         KeywordView.visibility = View.GONE
                         contextEditText.setText(str) // editText에 textView에 저장된 내용을 출력
                         save_Btn.visibility = View.VISIBLE
                         keyword_Btn.visibility = View.VISIBLE
+                        scrollView.visibility = View.GONE
                         mod_Btn.visibility = View.GONE
                         del_Btn.visibility = View.GONE
                         diaryView.text = "${contextEditText.getText()}"
@@ -118,6 +123,7 @@ class DiaryDayView : AppCompatActivity() {
                         save_Btn.visibility = View.VISIBLE
                         keyword_Btn.visibility = View.VISIBLE
                         KeywordView.visibility = View.INVISIBLE
+                        scrollView.visibility = View.GONE
                         mod_Btn.visibility = View.GONE
                         del_Btn.visibility = View.GONE
                         removeDiary(fname)
@@ -129,6 +135,7 @@ class DiaryDayView : AppCompatActivity() {
                     KeywordView.visibility = View.GONE
                     save_Btn.visibility = View.VISIBLE
                     keyword_Btn.visibility = View.VISIBLE
+                    scrollView.visibility = View.GONE
                     mod_Btn.visibility = View.GONE
                     del_Btn.visibility = View.GONE
                     contextEditText.visibility = View.VISIBLE

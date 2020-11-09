@@ -46,7 +46,7 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
         }
         else { // SharedPreferences 안에 값이 저장되어 있을 때 -> MainActivity로 이동
             Toast.makeText(this, "${MySharedPreferences.getUserId(this)}님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             toMainActivity(firebaseAuth?.currentUser)
             finish()
         }
@@ -68,7 +68,6 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
                 .setPositiveButton("확인") { dialogInterface, i ->
                     firebaseAuth?.sendPasswordResetEmail(dialogText.text.toString())
                         ?.addOnCompleteListener(this){
-                            Log.d("LoginActivity", "songkiwoong")
                             if(it.isSuccessful){
                                 //비밀번호 재설정 메일을 보내기가 성공했을때 이벤트
                                 var toast = Toast.makeText(this, "메일을 확인해주세요.", Toast.LENGTH_SHORT)
@@ -103,7 +102,7 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if(account!==null){ // 이미 로그인 되어있을시 바로 메인 액티비티로 이동
-           toMainActivity(firebaseAuth.currentUser)
+           //toMainActivity(firebaseAuth.currentUser)
         }
     } //onStart End
 

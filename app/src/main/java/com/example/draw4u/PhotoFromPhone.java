@@ -72,6 +72,9 @@ public class PhotoFromPhone extends AppCompatActivity {
             public void onClick(View view) {
                 //업로드
                 uploadFile();
+                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

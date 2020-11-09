@@ -8,7 +8,14 @@
     android:background="@drawable/background"
     android:padding="20dp"
     android:orientation="vertical">
-
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="60dp"
+        android:layout_gravity="left"
+        android:src="@drawable/toplogo"/>
     <Button
         android:id="@+id/btn_logout"
         android:text="로그 아웃"

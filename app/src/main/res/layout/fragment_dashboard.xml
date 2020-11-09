@@ -7,6 +7,14 @@
     android:orientation="vertical"
     android:background="@drawable/background"
     tools:context=".ui.dashboard.DashboardFragment">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="60dp"
+        android:layout_gravity="left"
+        android:src="@drawable/toplogo"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"

@@ -7,7 +7,13 @@
     android:orientation="vertical"
     android:background="@drawable/background"
     tools:context=".SelectImage">
-
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="60dp"
+        android:src="@drawable/toplogo"/>
 
     <ImageView
         android:id="@+id/imgTranslate"
@@ -19,24 +25,38 @@
     <Button
         android:id="@+id/btn_down"
         android:text="그려진 이미지 보기"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:background="@drawable/buttonimage"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/kyobo"/>
 
     <Button
         android:id="@+id/btn_sel"
         android:text="이미지 선택하기"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:background="@drawable/buttonimage"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/kyobo"/>
 
     <Button
         android:id="@+id/btn_imageFromPhone"
-        android:text="앨범에서 사진 가져오기"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:text="앨범에서 가져오기"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:background="@drawable/buttonimage"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/kyobo"/>
 
 
 
