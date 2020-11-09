@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.notifications.NotificationsFragment"
     android:background="@drawable/background"
-    android:padding="20dp"
     android:orientation="vertical">
     <ImageView
         android:id="@+id/imageView"

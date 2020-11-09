@@ -14,9 +14,9 @@
         <TextView
             android:text="비밀번호 찾기"
             android:textSize="20sp"
-            android:textColor="#fff"
+            android:textColor="#000000"
             android:gravity="center"
-            android:background="#03A9F4"
+            android:background="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="53dp" />
     </LinearLayout>

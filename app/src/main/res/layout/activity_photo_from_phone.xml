@@ -8,13 +8,22 @@
     tools:context=".PhotoFromPhone"
     android:background="@drawable/background">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="60dp"
+        android:src="@drawable/toplogo"/>
+
     <!--이미지 출력-->
     <ImageView
         android:id="@+id/iv_preview"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="80dp"
+        android:src="@drawable/basicimage"/>
 
     <Button
         android:id="@+id/bt_choose"

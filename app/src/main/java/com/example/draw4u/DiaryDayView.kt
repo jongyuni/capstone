@@ -7,7 +7,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -54,6 +57,7 @@ class DiaryDayView : AppCompatActivity() {
             scrollView.visibility = View.VISIBLE
             contextEditText.visibility = View.GONE
             diaryView.visibility = View.VISIBLE
+            imageView.visibility = View.VISIBLE
         }//일기 저장 버튼 클릭시
 
         keyword_Btn.setOnClickListener {//키워드 추출 Button이 클릭되면
@@ -68,6 +72,7 @@ class DiaryDayView : AppCompatActivity() {
             scrollView.visibility = View.VISIBLE
             contextEditText.visibility = View.GONE
             diaryView.visibility = View.VISIBLE
+            imageView.visibility = View.VISIBLE
         }
 
     }
@@ -104,33 +109,46 @@ class DiaryDayView : AppCompatActivity() {
 
                     mod_Btn.setOnClickListener {
                         imageView.visibility = View.GONE
-                        contextEditText.visibility = View.VISIBLE
-                        diaryView.visibility = View.GONE
                         KeywordView.visibility = View.GONE
+                        diaryView.visibility = View.GONE
+                        scrollView.visibility = View.GONE
+                        contextEditText.visibility = View.VISIBLE
+                        //contextEditText.layoutParams =
                         contextEditText.setText(str) // editText에 textView에 저장된 내용을 출력
                         save_Btn.visibility = View.VISIBLE
                         keyword_Btn.visibility = View.VISIBLE
-                        scrollView.visibility = View.GONE
                         mod_Btn.visibility = View.GONE
                         del_Btn.visibility = View.GONE
                         diaryView.text = "${contextEditText.getText()}"
                     }// 수정 버튼을 누를 시
 
                     del_Btn.setOnClickListener {
-                        diaryView.visibility = View.GONE
-                        contextEditText.setText("")
-                        contextEditText.visibility = View.VISIBLE
-                        save_Btn.visibility = View.VISIBLE
-                        keyword_Btn.visibility = View.VISIBLE
-                        KeywordView.visibility = View.INVISIBLE
-                        scrollView.visibility = View.GONE
-                        mod_Btn.visibility = View.GONE
-                        del_Btn.visibility = View.GONE
-                        removeDiary(fname)
+                        val builder = AlertDialog.Builder(this)
+                        val dialogView = layoutInflater.inflate(R.layout.activity_delete_check, null)
+
+                        builder.setView(dialogView)
+                            .setPositiveButton("확인"){dialogInterface, i ->
+                                imageView.visibility = View.INVISIBLE
+                                KeywordView.visibility = View.INVISIBLE
+                                diaryView.visibility = View.GONE
+                                scrollView.visibility = View.GONE
+                                contextEditText.visibility = View.VISIBLE
+                                contextEditText.setText("")
+                                save_Btn.visibility = View.VISIBLE
+                                keyword_Btn.visibility = View.VISIBLE
+                                mod_Btn.visibility = View.GONE
+                                del_Btn.visibility = View.GONE
+                                removeDiary(fname)
+                            }
+                            .setNegativeButton("취소"){dialogInterface, i ->
+                            }
+                            .show()
+
                     }//삭제 버튼 클릭시
                 }//저장된 일기가 있을때
                 else{
                     str = ""
+                    imageView.visibility = View.INVISIBLE
                     diaryView.visibility = View.GONE
                     KeywordView.visibility = View.GONE
                     save_Btn.visibility = View.VISIBLE

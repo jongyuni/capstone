@@ -59,7 +59,8 @@ public class SelectImage extends AppCompatActivity {
         selGan = (Button) findViewById(R.id.btn_sel);
 
         //String image_url = "https://firebasestorage.googleapis.com/v0/b/drawforyou-51628.appspot.com/o/images%2F1gtanzcT5kcGkdPQVkEmRMbSG4x120201115_18011gtanzcT5kcGkdPQVkEmRMbSG4x1.png?alt=media";
-        String image_url = "https://lh3.googleusercontent.com/proxy/TygmmySA-qQg1PGz48QBCo2bFCI2U6Rn2sz4FQ5vnG1_jZ9EmZddhQ1ghmeoLffXMfj4K-KmpuoHDyR3ictvrrqSqLXe1Q";
+        //String image_url = "https://lh3.googleusercontent.com/proxy/TygmmySA-qQg1PGz48QBCo2bFCI2U6Rn2sz4FQ5vnG1_jZ9EmZddhQ1ghmeoLffXMfj4K-KmpuoHDyR3ictvrrqSqLXe1Q";
+        String image_url ="https://d1m8tzv6n1gicn.cloudfront.net/uploads/5b6470cb6b86f309b09212365315c222.jpg";
 
         mDown.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -142,9 +143,9 @@ public class SelectImage extends AppCompatActivity {
         //업로드할 파일이 있으면 수행
         if (mBitmap != null) {
             //업로드 진행 Dialog 보이기
-            final ProgressDialog progressDialog = new ProgressDialog(this);
+            /*final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("업로드중...");
-            progressDialog.show();
+            progressDialog.show();*/
 
             //storage
             FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -169,7 +170,9 @@ public class SelectImage extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
+                            //progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
+                            Log.d("error","choi Jong yun");
+                            Log.d("error",fileURL);
 
                             db.collection(currentUser.getUid()).document(fname)
                                     .update("imageURL",fileURL);
@@ -181,7 +184,7 @@ public class SelectImage extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
+                            //progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -192,7 +195,7 @@ public class SelectImage extends AppCompatActivity {
                             @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
                                     double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
                             //dialog에 진행률을 퍼센트로 출력해 준다
-                            progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
+                            //progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
                         }
                     });
         } else {
