@@ -43,6 +43,8 @@ class DiaryDayView : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(supportActionBar != null)
+            supportActionBar?.hide()
         setContentView(R.layout.activity_diary_day_view)
 
         fbAuth = FirebaseAuth.getInstance()
@@ -101,14 +103,13 @@ class DiaryDayView : AppCompatActivity() {
                     imageView.visibility = View.VISIBLE
                     val url_str : String = diaryinfo.imageURL.toString()
                     val new_str = "\"" + url_str + "\""
-                    //Log.d("urL_str" , new_str)
+
                     tempdiaryinfo.diary =str
                     tempdiaryinfo.imageURL = url_str
                     tempdiaryinfo.keyword1 = diaryinfo.keyword1
                     tempdiaryinfo.keyword2 = diaryinfo.keyword2
                     tempdiaryinfo.keyword3 = diaryinfo.keyword3
-                    //Log.d("diaryinfo.keyword1" , diaryinfo.keyword1.toString())
-                    //Log.d("tempdiaryinfo.keyword1", tempdiaryinfo.keyword1.toString())
+
                     keyword = "#" + tempdiaryinfo.keyword1 + " #" + tempdiaryinfo.keyword2 + " #" + tempdiaryinfo.keyword3
                     Picasso.get().load(url_str).into(imageView)
                     KeywordView.text = "${keyword}"
@@ -265,7 +266,6 @@ class DiaryDayView : AppCompatActivity() {
             .show()*/
 
         var id= fbAuth?.uid.toString()
-        Log.d("CometChatAPI::", fbAuth?.uid.toString())
         val intent = Intent(this, SelectKeyword::class.java)
         intent.putExtra("fname", fname)
         intent.putExtra("uid",id)

@@ -18,6 +18,7 @@ public class HomeFragment extends Fragment implements CalendarView.OnDateChangeL
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
+
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.activity_cal_dia_view, container, false);

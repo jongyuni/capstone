@@ -22,6 +22,7 @@
             android:textColor="#9E28B3"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:fontFamily="@font/kyobo"
             /><!--날짜 표시-->
 
         <ImageView
@@ -44,6 +45,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:visibility="invisible"
+            android:fontFamily="@font/kyobo"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             /><!--키워드 뷰-->
 
@@ -67,6 +69,7 @@
             android:hint="오늘은 어떤 하루를 보냈나요?"
             android:inputType="textMultiLine"
             android:visibility="invisible"
+            android:fontFamily="@font/kyobo"
             /><!--일기 작성 공간-->
 
         <TextView
@@ -78,6 +81,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:visibility="gone"
+            android:fontFamily="@font/kyobo"
             /><!--저장된 일기 출력-->
 
     </LinearLayout>
@@ -92,14 +96,16 @@
             android:text="저장"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:visibility="invisible" /><!--저장 버튼-->
+            android:visibility="invisible"
+            android:fontFamily="@font/kyobo"/><!--저장 버튼-->
 
         <Button
             android:id="@+id/keyword_Btn"
             android:text="키워드 추출"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:visibility="invisible" /><!--키워드 버튼-->
+            android:visibility="invisible"
+            android:fontFamily="@font/kyobo"/><!--키워드 버튼-->
 
     </LinearLayout>
 
@@ -114,6 +120,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            android:fontFamily="@font/kyobo"
             /><!--수정 버튼-->
 
         <Button
@@ -122,6 +129,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            android:fontFamily="@font/kyobo"
             /><!--삭제 버튼-->
 
     </LinearLayout>

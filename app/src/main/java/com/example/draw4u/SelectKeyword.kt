@@ -88,7 +88,9 @@ class SelectKeyword : AppCompatActivity() {
 
         }
         Keyword2.setOnClickListener(){
-            makeImage(fname, uid, this.keyword2)
+            //makeImage(fname, uid, this.keyword2)
+            val intent = Intent(this,PhotoFromPhone::class.java)
+            startActivity(intent)
         }
         Keyword3.setOnClickListener(){
             makeImage(fname, uid, this.keyword3)

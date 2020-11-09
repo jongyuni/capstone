@@ -20,6 +20,7 @@
         android:textColor="#9E28B3"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:fontFamily="@font/kyobo"
         />
 
     <CalendarView
