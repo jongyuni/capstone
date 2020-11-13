@@ -13,7 +13,8 @@ class Splash : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         Handler().postDelayed({ //delay를 위한 handler
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, DrawingActivity::class.java))
+            //startActivity(Intent(this, LoginActivity::class.java))
             //startActivity(Intent(this, MainActivity::class.java))
             finish()
         }, SPLASH_VIEW_TIME)
