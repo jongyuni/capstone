@@ -42,6 +42,7 @@ public class SelectImage extends AppCompatActivity {
     Button phoneImage;
     Button selGan;
     public String fname;
+    public String keyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class SelectImage extends AppCompatActivity {
 
         Intent intent = getIntent();
         fname = intent.getExtras().getString("fname");
+        keyword = intent.getExtras().getString("keyword");
 
         mDown = (Button) findViewById(R.id.btn_down);
         mImgTrans = (ImageView) findViewById(R.id.imgTranslate);
@@ -60,7 +62,8 @@ public class SelectImage extends AppCompatActivity {
 
         //String image_url = "https://firebasestorage.googleapis.com/v0/b/drawforyou-51628.appspot.com/o/images%2F1gtanzcT5kcGkdPQVkEmRMbSG4x120201115_18011gtanzcT5kcGkdPQVkEmRMbSG4x1.png?alt=media";
         //String image_url = "https://lh3.googleusercontent.com/proxy/TygmmySA-qQg1PGz48QBCo2bFCI2U6Rn2sz4FQ5vnG1_jZ9EmZddhQ1ghmeoLffXMfj4K-KmpuoHDyR3ictvrrqSqLXe1Q";
-        String image_url ="https://d1m8tzv6n1gicn.cloudfront.net/uploads/5b6470cb6b86f309b09212365315c222.jpg";
+        //String image_url ="https://d1m8tzv6n1gicn.cloudfront.net/uploads/5b6470cb6b86f309b09212365315c222.jpg";
+        String image_url = "http://34.64.108.156:8000/picture/" + keyword.toString();
 
         mDown.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {

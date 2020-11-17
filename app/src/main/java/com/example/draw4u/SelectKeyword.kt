@@ -85,22 +85,28 @@ class SelectKeyword : AppCompatActivity() {
 
         Keyword1.setOnClickListener(){
             //makeImage(fname, uid, this.keyword1)
+            makeImage(this.keyword1)
             val intent = Intent(this,SelectImage::class.java)
             intent.putExtra("fname",fname)
+            intent.putExtra("keyword",this.keyword1)
             startActivity(intent)
             finish()
         }
         Keyword2.setOnClickListener(){
             //makeImage(fname, uid, this.keyword2)
+            makeImage(this.keyword2)
             val intent = Intent(this,SelectImage::class.java)
             intent.putExtra("fname",fname)
+            intent.putExtra("keyword",this.keyword2)
             startActivity(intent)
             finish()
         }
         Keyword3.setOnClickListener(){
             //makeImage(fname, uid, this.keyword3)
+            makeImage(this.keyword3)
             val intent = Intent(this,SelectImage::class.java)
             intent.putExtra("fname",fname)
+            intent.putExtra("keyword",this.keyword3)
             startActivity(intent)
             finish()
         }
@@ -125,14 +131,14 @@ class SelectKeyword : AppCompatActivity() {
 
     }
 
-    fun makeImage(fname: String, uid: String, keyword: String){
+    fun makeImage(keyword: String){
         val selKeyword: String
         selKeyword = keyword
-        val filename: String
-        filename = fname
+        //val filename: String
+        //filename = fname
         var result_image :String
-        val id: String
-        id = uid
+        //val id: String
+        //id = uid
 
         val okHttpClient = OkHttpClient.Builder()
             .connectTimeout(20, TimeUnit.SECONDS)
@@ -169,7 +175,7 @@ class SelectKeyword : AppCompatActivity() {
                     Toast.makeText(this@SelectKeyword,"대상 이미지가 없습니다.",Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    saveImage(filename, id)
+
                 }
             }//서버 통신 성공
         })
