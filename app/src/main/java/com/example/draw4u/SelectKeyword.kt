@@ -84,7 +84,6 @@ class SelectKeyword : AppCompatActivity() {
             }
 
         Keyword1.setOnClickListener(){
-            //makeImage(fname, uid, this.keyword1)
             makeImage(this.keyword1)
             val intent = Intent(this,SelectImage::class.java)
             intent.putExtra("fname",fname)
@@ -93,7 +92,6 @@ class SelectKeyword : AppCompatActivity() {
             finish()
         }
         Keyword2.setOnClickListener(){
-            //makeImage(fname, uid, this.keyword2)
             makeImage(this.keyword2)
             val intent = Intent(this,SelectImage::class.java)
             intent.putExtra("fname",fname)
@@ -102,7 +100,6 @@ class SelectKeyword : AppCompatActivity() {
             finish()
         }
         Keyword3.setOnClickListener(){
-            //makeImage(fname, uid, this.keyword3)
             makeImage(this.keyword3)
             val intent = Intent(this,SelectImage::class.java)
             intent.putExtra("fname",fname)
@@ -112,24 +109,6 @@ class SelectKeyword : AppCompatActivity() {
         }
     }
 
-    fun saveImage(fname: String, uid: String){
-        fbAuth = FirebaseAuth.getInstance()
-        fbFirestore = FirebaseFirestore.getInstance()
-
-        /*fbFirestore?.collection(uid)?.document(fname)?.update("imageURL","http://34.64.68.254:8000/static/result.png")
-            ?.addOnSuccessListener{}
-            ?.addOnFailureListener{}
-
-        val intent =  Intent(this, CalDiaView::class.java)
-        //val intent = Intent(this, DiaryDayView::class.java)
-        //intent.putExtra("bitmap",bitmap)
-        //intent.putExtra("fname",fname)
-        startActivity(intent)
-        finish()
-        //Handler().postDelayed({startActivity(intent)},5000)*/
-
-
-    }
 
     fun makeImage(keyword: String){
         val selKeyword: String

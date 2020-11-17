@@ -113,7 +113,6 @@ class DiaryDayView : AppCompatActivity() {
                         diaryView.visibility = View.GONE
                         scrollView.visibility = View.GONE
                         contextEditText.visibility = View.VISIBLE
-                        //contextEditText.layoutParams =
                         contextEditText.setText(str) // editText에 textView에 저장된 내용을 출력
                         save_Btn.visibility = View.VISIBLE
                         keyword_Btn.visibility = View.VISIBLE
@@ -182,106 +181,12 @@ class DiaryDayView : AppCompatActivity() {
     }//일기 삭제
 
     fun makeKeyword(fname: String){
-        /*val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .writeTimeout(20, TimeUnit.SECONDS)
-            .build()
 
-        var content = tempdiaryinfo.diary*/
-
-        /*val intent1 = Intent(this, ExtractKeyword::class.java)
-        intent1.putExtra("fname", fname)
-        intent1.putExtra("content",content)
-        startActivity(intent1)*/
-
-
-       /* val builder: Retrofit.Builder = Retrofit.Builder()
-            .baseUrl("http://34.64.108.156:8000/")
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-
-        val retrofit: Retrofit = builder.build()
-
-        val service = retrofit.create(RetrofitService::class.java)
-
-        val call: Call<ResultKeyword> = service.getkeyword()
-
-        call.enqueue(object : Callback<ResultKeyword> {
-
-            override fun onFailure(call: Call<ResultKeyword>,t: Throwable){
-                Toast.makeText(this@DiaryDayView,"실패",Toast.LENGTH_LONG).show()
-                Log.d("CometChatAPI::", "Failed API call with call: " + call +
-                        " + exception: " + t)
-            }//서버 통신 실패
-
-            override fun onResponse(
-                call: Call<ResultKeyword>,
-                response: Response<ResultKeyword>
-            ) {
-                var result_keyword :ResultKeyword
-                result_keyword = response.body()!!
-                Toast.makeText(this@DiaryDayView,"성공",Toast.LENGTH_LONG).show()
-                Log.d("CometChatAPI::", result_keyword.toString())
-                Log.d("CometChatAPI::", fbAuth?.uid.toString())
-                tempdiaryinfo.keyword1 = result_keyword.keywords[0]
-                tempdiaryinfo.keyword2 = result_keyword.keywords[1]
-                tempdiaryinfo.keyword3 = result_keyword.keywords[2]
-
-                fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.set(tempdiaryinfo)
-            }//서버 통신 성공시 키워드 추출
-        })*/
-        /*val builder = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.activity_select_keyword, null)
-        val btn1 = dialogView.findViewById<Button>(R.id.Keyword1)
-        val btn2 = dialogView.findViewById<Button>(R.id.Keyword2)
-        val btn3 = dialogView.findViewById<Button>(R.id.Keyword3)
-        val dialogText = dialogView.findViewById<EditText>(R.id.EmailAddress)
-
-        btn1.setOnClickListener(){
-            Log.d("keyword1", "success")
-        }
-        btn2.setOnClickListener(){
-            Log.d("keyword2", "success")
-        }
-        btn3.setOnClickListener(){
-            Log.d("keyword3", "success")
-        }
-        builder.setView(dialogView)
-            .setPositiveButton("확인") { dialogInterface, i ->
-                fbAuth?.sendPasswordResetEmail(dialogText.text.toString())
-                    ?.addOnCompleteListener(this){
-                        Log.d("LoginActivity", "songkiwoong")
-                        if(it.isSuccessful){
-                            //비밀번호 재설정 메일을 보내기가 성공했을때 이벤트
-                            var toast = Toast.makeText(this, "메일을 확인해주세요.", Toast.LENGTH_SHORT)
-                            toast.show()
-                        }
-                        else{
-                            var toast = Toast.makeText(this, "입력이 제대로 안 됐습니다.", Toast.LENGTH_SHORT)
-                            toast.show()
-                        }
-                    }
-                //확인일 때 main의 View의 값에 dialog View에 있는 값을 적용
-
-            }
-            .setNegativeButton("취소") { dialogInterface, i ->
-                //취소일 때 아무 액션이 없으므로 빈칸
-            }
-            .show()*/
-
-        var id= fbAuth?.uid.toString()
-        val intent = Intent(this, SelectKeyword::class.java)
-        //val intent = Intent(this,ExtractKeyword::class.java)
+        var content: String = contextEditText.getText().toString()
+        val intent = Intent(this,ExtractKeyword::class.java)
         intent.putExtra("fname", fname)
-        intent.putExtra("uid", id)
-        //startActivityForResult(intent,100)
-        //업로드 진행 Dialog 보이기
-        /*val progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("업로드중...")
-        progressDialog.show()*/
-
-        Handler().postDelayed({ startActivity(intent) }, 3000)
+        intent.putExtra("content",content)
+        startActivityForResult(intent,100)
 
     }
 
@@ -290,9 +195,9 @@ class DiaryDayView : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 100 -> {
-                    //progressDialog.dismiss()
                     val intent = Intent(this, SelectKeyword::class.java)
                     intent.putExtra("fname", fname)
+                    intent.putExtra("uid",fbAuth?.uid.toString())
                     startActivity(intent)
                     finish()
                 }
