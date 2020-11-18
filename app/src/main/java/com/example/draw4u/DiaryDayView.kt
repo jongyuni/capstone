@@ -50,6 +50,7 @@ class DiaryDayView : AppCompatActivity() {
             saveDiary(fname) // saveDiary 메소드 호출
             str = contextEditText.getText().toString() // str 변수에 edittext내용을 toString형으로 저장
             diaryView.text = "${str}" // textView에 str 출력
+            KeywordView.visibility = View.VISIBLE
             save_Btn.visibility = View.GONE
             keyword_Btn.visibility = View.GONE
             mod_Btn.visibility = View.VISIBLE
@@ -65,6 +66,7 @@ class DiaryDayView : AppCompatActivity() {
             makeKeyword(fname) //keyword 추출 메소드 호출
             str = contextEditText.getText().toString() // str 변수에 edittext내용을 toString형으로 저장
             diaryView.text = "${str}" // textView에 str 출력
+            KeywordView.visibility = View.VISIBLE
             save_Btn.visibility = View.GONE
             keyword_Btn.visibility = View.GONE
             mod_Btn.visibility = View.VISIBLE

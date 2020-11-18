@@ -30,6 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -43,6 +44,7 @@ public class SelectImage extends AppCompatActivity {
     Button selGan;
     public String fname;
     public String keyword;
+    InputStream instream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +62,9 @@ public class SelectImage extends AppCompatActivity {
         phoneImage = (Button) findViewById(R.id.btn_imageFromPhone);
         selGan = (Button) findViewById(R.id.btn_sel);
 
-        //String image_url = "https://firebasestorage.googleapis.com/v0/b/drawforyou-51628.appspot.com/o/images%2F1gtanzcT5kcGkdPQVkEmRMbSG4x120201115_18011gtanzcT5kcGkdPQVkEmRMbSG4x1.png?alt=media";
-        //String image_url = "https://lh3.googleusercontent.com/proxy/TygmmySA-qQg1PGz48QBCo2bFCI2U6Rn2sz4FQ5vnG1_jZ9EmZddhQ1ghmeoLffXMfj4K-KmpuoHDyR3ictvrrqSqLXe1Q";
-        //String image_url ="https://d1m8tzv6n1gicn.cloudfront.net/uploads/5b6470cb6b86f309b09212365315c222.jpg";
+        //String image_url ="https://storage.googleapis.com/artlab-public.appspot.com/stencils/selman/line-01.svg";
         String image_url = "http://34.64.108.156:8000/picture/" + keyword.toString();
+        //String image_url = "https://www.dhnews.co.kr/news/photo/202001/117807_120078_3021.jpg";
 
         mDown.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -109,10 +110,11 @@ public class SelectImage extends AppCompatActivity {
 
         protected Bitmap doInBackground(String... args) {
             try {
+                instream = (InputStream) new URL(args[0]).getContent();
+                instream.mark(instream.available());
                 mBitmap = BitmapFactory
-                        .decodeStream((InputStream) new URL(args[0])
-                                .getContent());
-
+                        .decodeStream(instream);
+                instream.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -174,8 +176,6 @@ public class SelectImage extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             //progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
-                            Log.d("error","choi Jong yun");
-                            Log.d("error",fileURL);
 
                             db.collection(currentUser.getUid()).document(fname)
                                     .update("imageURL",fileURL);
