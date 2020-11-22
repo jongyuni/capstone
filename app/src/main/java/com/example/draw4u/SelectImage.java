@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,12 +32,24 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.annotation.Target;
+import java.net.URI;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.methods.HttpGet;
+import cz.msebera.android.httpclient.entity.BufferedHttpEntity;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 
 public class SelectImage extends AppCompatActivity {
     Button mDown;
@@ -44,7 +59,6 @@ public class SelectImage extends AppCompatActivity {
     Button selGan;
     public String fname;
     public String keyword;
-    InputStream instream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +76,8 @@ public class SelectImage extends AppCompatActivity {
         phoneImage = (Button) findViewById(R.id.btn_imageFromPhone);
         selGan = (Button) findViewById(R.id.btn_sel);
 
-        //String image_url ="https://storage.googleapis.com/artlab-public.appspot.com/stencils/selman/line-01.svg";
-        String image_url = "http://34.64.108.156:8000/picture/" + keyword.toString();
+        String image_url ="https://storage.googleapis.com/artlab-public.appspot.com/stencils/selman/line-01.svg";
+        //String image_url = "http://34.64.108.156:8000/picture/" + keyword.toString();
         //String image_url = "https://www.dhnews.co.kr/news/photo/202001/117807_120078_3021.jpg";
 
         mDown.setOnClickListener(new View.OnClickListener() {
@@ -110,11 +124,9 @@ public class SelectImage extends AppCompatActivity {
 
         protected Bitmap doInBackground(String... args) {
             try {
+                InputStream instream;
                 instream = (InputStream) new URL(args[0]).getContent();
-                instream.mark(instream.available());
-                mBitmap = BitmapFactory
-                        .decodeStream(instream);
-                instream.close();
+                mBitmap = BitmapFactory.decodeStream(instream);
             } catch (Exception e) {
                 e.printStackTrace();
             }
