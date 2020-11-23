@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,8 @@ import java.util.ArrayList;
 public class DashboardFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
+    private Button btn_search;
+    public EditText searchWord;
     private  MyAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<ResultDiary> diaryInfos = new ArrayList<>();
@@ -43,7 +47,8 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-
+        searchWord = (EditText)view.findViewById(R.id.searchWord);
+        btn_search = (Button)view.findViewById(R.id.btn_search);
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recyclerview);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -53,8 +58,17 @@ public class DashboardFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        btn_search.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                initDataset(searchWord.getText().toString());
+            }
+        });
+
         return view;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -67,7 +81,7 @@ public class DashboardFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
-    private void initDataset() {
+    private void initDataset() {//맨 처음 data set 설정
 
         db.collection(mAuth.getUid())
                 .get()
@@ -79,6 +93,35 @@ public class DashboardFragment extends Fragment {
                                 DiaryInfo diaryInfo = document.toObject(DiaryInfo.class);
                                 ResultDiary resultDiary = new ResultDiary(diaryInfo);
                                 diaryInfos.add(resultDiary);
+                            }
+                            mAdapter.notifyDataSetChanged();//Dataset Update
+                        } else {
+                            Toast.makeText(getActivity(), "ERROR!",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+    }
+
+    private void initDataset(String searchWord) {//검색해서 data set 초기화
+
+        db.collection(mAuth.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {//data 가져오기
+                            diaryInfos.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if(document.get("diary").toString().contains(searchWord)){
+                                    DiaryInfo diaryInfo = document.toObject(DiaryInfo.class);
+                                    ResultDiary resultDiary = new ResultDiary(diaryInfo);
+                                    diaryInfos.add(resultDiary);
+                                }
+                                else {
+                                    continue;
+                                }
                             }
                             mAdapter.notifyDataSetChanged();//Dataset Update
                         } else {

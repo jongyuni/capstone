@@ -70,7 +70,7 @@ open class LoginActivity : AppCompatActivity(),View.OnClickListener {
                         ?.addOnCompleteListener(this){
                             if(it.isSuccessful){
                                 //비밀번호 재설정 메일을 보내기가 성공했을때 이벤트
-                                var toast = Toast.makeText(this, "메일을 확인해주세요.", Toast.LENGTH_SHORT)
+                                var toast = Toast.makeText(this, "비밀번호 재설정 이메일을 보냈습니다. 확인해주세요.", Toast.LENGTH_SHORT)
                                 toast.show()
                             }
                             else{

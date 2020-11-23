@@ -76,8 +76,8 @@ public class SelectImage extends AppCompatActivity {
         phoneImage = (Button) findViewById(R.id.btn_imageFromPhone);
         selGan = (Button) findViewById(R.id.btn_sel);
 
-        String image_url ="https://storage.googleapis.com/artlab-public.appspot.com/stencils/selman/line-01.svg";
-        //String image_url = "http://34.64.108.156:8000/picture/" + keyword.toString();
+        //String image_url ="https://storage.googleapis.com/artlab-public.appspot.com/stencils/selman/line-01.svg";
+        String image_url = "http://34.64.108.156:8000/picture/" + keyword.toString();
         //String image_url = "https://www.dhnews.co.kr/news/photo/202001/117807_120078_3021.jpg";
 
         mDown.setOnClickListener(new View.OnClickListener() {
@@ -207,7 +207,7 @@ public class SelectImage extends AppCompatActivity {
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
+                            @SuppressWarnings("VisibleForTests") //이게 뭘까
                                     double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
                             //dialog에 진행률을 퍼센트로 출력해 준다
                             //progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");

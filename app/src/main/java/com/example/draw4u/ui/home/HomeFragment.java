@@ -14,13 +14,9 @@ import com.example.draw4u.R;
 
 public class HomeFragment extends Fragment implements CalendarView.OnDateChangeListener {
 
-    private HomeViewModel homeViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
 
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.activity_cal_dia_view, container, false);
         final CalendarView calendarview = root.findViewById(R.id.calendarView);
         calendarview.setOnDateChangeListener(this);
