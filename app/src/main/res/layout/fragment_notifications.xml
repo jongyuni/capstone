@@ -18,9 +18,13 @@
     <Button
         android:id="@+id/btn_logout"
         android:text="로그 아웃"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp" />
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/kyobo"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:background="@drawable/buttonimage"/>
 
 </LinearLayout>

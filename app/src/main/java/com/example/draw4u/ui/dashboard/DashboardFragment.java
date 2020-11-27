@@ -1,33 +1,29 @@
 package com.example.draw4u.ui.dashboard;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.draw4u.DiaryInfo;
 import com.example.draw4u.R;
 import com.example.draw4u.ResultDiary;
-import com.example.draw4u.SelectImage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -41,6 +37,7 @@ public class DashboardFragment extends Fragment {
     private  MyAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<ResultDiary> diaryInfos = new ArrayList<>();
+    private SwipeRefreshLayout refreshLayout;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -57,14 +54,26 @@ public class DashboardFragment extends Fragment {
         mAdapter = new MyAdapter(diaryInfos);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
 
+        //일기 검색
         btn_search.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
-                initDataset(searchWord.getText().toString());
+                initDataset(searchWord.getText().toString().trim());
             }
-        });
+        });//일기 검색
+
+        //리스트 갱신
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                diaryInfos.clear();
+                searchWord.setText("");
+                initDataset();
+                refreshLayout.setRefreshing(false);
+            }
+        });//리스트 갱신
 
         return view;
     }
@@ -73,6 +82,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        diaryInfos.clear();
         initDataset();
     }
 
@@ -81,9 +91,11 @@ public class DashboardFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
-    private void initDataset() {//맨 처음 data set 설정
 
+    //시작 dataset
+    private void initDataset() {//맨 처음 data set 설정
         db.collection(mAuth.getUid())
+                .orderBy("date", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -104,9 +116,11 @@ public class DashboardFragment extends Fragment {
 
     }
 
+    //일기 검색시 dataset
     private void initDataset(String searchWord) {//검색해서 data set 초기화
 
         db.collection(mAuth.getUid())
+                .orderBy("date", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

@@ -6,6 +6,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -16,6 +17,8 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_diary_day_view.*
+import kotlinx.android.synthetic.main.activity_modify_keyword.*
+import kotlinx.android.synthetic.main.item.*
 
 
 class DiaryDayView : AppCompatActivity() {
@@ -26,6 +29,7 @@ class DiaryDayView : AppCompatActivity() {
     var fbFirestore : FirebaseFirestore? = null
 
     var tempdiaryinfo = DiaryInfo()
+    var keyword: String=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,13 +79,108 @@ class DiaryDayView : AppCompatActivity() {
             contextEditText.visibility = View.GONE
             diaryView.visibility = View.VISIBLE
             imageView.visibility = View.VISIBLE
+        }//키워드 추출 버튼 클릭시
+
+        KeywordView.setOnClickListener(){//키워드 수정시
+            val builder = AlertDialog.Builder(this)
+            val dialogView = layoutInflater.inflate(R.layout.activity_modify_keyword, null)
+            val dialogText = dialogView.findViewById<EditText>(R.id.EditKeyword)
+            dialogText.setText(keyword)
+
+            builder.setView(dialogView)
+                .setPositiveButton("저장"){dialogInterface, i ->
+                    var input = dialogText.text.toString()
+                    var token = input.split('#',' ')
+                    //키워드 수정하여 저장
+
+                    //키워드 재설정
+                    if(token.size.toInt() > 4){
+                        if(token[1].isNullOrEmpty()){
+                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",null)
+                        }
+                        else{
+                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",token[1])
+                            keyword = "#" + token[1]
+                        }
+                        if(token[3].isNullOrEmpty()){
+                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",null)
+                        }
+                        else{
+                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",token[3])
+                            keyword = keyword + " #" + token[3]
+                        }
+                        if(token[5].isNullOrEmpty()){
+                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword3",null)
+                        }
+                        else{
+                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword3",token[5])
+                            keyword = keyword + " #" + token[5]
+                        }
+                    }
+                    else if(token.size.toInt() > 2){
+                        if(token[1].isNullOrEmpty()){
+                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",null)
+                        }
+                        else{
+                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",token[1])
+                            keyword = "#" + token[1]
+                        }
+                        if(token[3].isNullOrEmpty()){
+                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",null)
+                        }
+                        else{
+                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",token[3])
+                            keyword = keyword + " #" + token[3]
+                        }
+                        fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword3",null)
+                    }
+                    else if(token.size.toInt() > 0){
+                        if(token[1].isNullOrEmpty()){
+                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",null)
+                        }
+                        else{
+                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",token[1])
+                            keyword = "#" + token[1]
+                        }
+                        fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",null)
+                        fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword3",null)
+                    }
+
+                    KeywordView.text = "${keyword}"
+                    KeywordView.visibility = View.VISIBLE
+                    //키워드 재설정
+
+                }
+                .setNegativeButton("취소"){dialogInterface, i ->}
+                .setNeutralButton("삭제"){dialogInterface, i ->
+                    fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",null)
+                    fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",null)
+                    fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword3",null)
+                    
+                    KeywordView.visibility = View.INVISIBLE
+                    //키워드 재설정
+                }
+                .show()
+        }//키워드가 눌리면 수정창이 뜬다
+
+        imageView.setOnClickListener(){
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("그림을 넣으시겠습니까?")
+                .setNeutralButton("네"){dialogInterface, i ->
+                    val intent = Intent(this, SelectMenu::class.java)
+                    intent.putExtra("fname", fname)
+                    startActivity(intent)
+                    finish()
+
+                }
+                .setNegativeButton("아니오"){dialogInterface, i ->}
+                .show()
         }
 
     }
 
     fun checkedDay(fname: String) {
 
-        var keyword: String=""
 
         fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.get()
             ?.addOnSuccessListener { documentSnapshot ->
@@ -92,15 +191,32 @@ class DiaryDayView : AppCompatActivity() {
                     diaryView.visibility = View.VISIBLE
                     diaryView.text = "${str}" // textView에 str 출력
                     imageView.visibility = View.VISIBLE
-                    val url_str : String = diaryinfo.imageURL.toString()
+                    if(diaryinfo.imageURL.isNullOrEmpty()){ }
+                    else{
+                        tempdiaryinfo.imageURL = diaryinfo.imageURL
+                        Glide.with(this).load(diaryinfo.imageURL).into(imageView)//이미지 출력
+                    }
+
                     tempdiaryinfo.diary =str
-                    tempdiaryinfo.imageURL = url_str
                     tempdiaryinfo.keyword1 = diaryinfo.keyword1
                     tempdiaryinfo.keyword2 = diaryinfo.keyword2
                     tempdiaryinfo.keyword3 = diaryinfo.keyword3
 
-                    keyword = "#" + tempdiaryinfo.keyword1 + " #" + tempdiaryinfo.keyword2 + " #" + tempdiaryinfo.keyword3
-                    Glide.with(this).load(url_str).into(imageView)//이미지 출력
+                    if(tempdiaryinfo.keyword1.isNullOrEmpty()){
+                        keyword = "  "
+                    }
+                    else{
+                        keyword = "#" + tempdiaryinfo.keyword1
+                    }
+                    if(tempdiaryinfo.keyword2.isNullOrEmpty()){ }
+                    else{
+                        keyword = keyword + " #" + tempdiaryinfo.keyword2
+                    }
+                    if(tempdiaryinfo.keyword3.isNullOrEmpty()){ }
+                    else{
+                        keyword = keyword + " #" + tempdiaryinfo.keyword3
+                    }
+
                     KeywordView.text = "${keyword}"
                     KeywordView.visibility = View.VISIBLE
                     save_Btn.visibility = View.GONE
@@ -110,7 +226,6 @@ class DiaryDayView : AppCompatActivity() {
                     del_Btn.visibility = View.VISIBLE
 
                     mod_Btn.setOnClickListener {
-                        imageView.visibility = View.GONE
                         KeywordView.visibility = View.GONE
                         diaryView.visibility = View.GONE
                         scrollView.visibility = View.GONE
@@ -129,7 +244,6 @@ class DiaryDayView : AppCompatActivity() {
 
                         builder.setView(dialogView)
                             .setPositiveButton("확인"){dialogInterface, i ->
-                                imageView.visibility = View.INVISIBLE
                                 KeywordView.visibility = View.INVISIBLE
                                 diaryView.visibility = View.GONE
                                 scrollView.visibility = View.GONE
@@ -149,7 +263,6 @@ class DiaryDayView : AppCompatActivity() {
                 }//저장된 일기가 있을때
                 else{
                     str = ""
-                    imageView.visibility = View.INVISIBLE
                     diaryView.visibility = View.GONE
                     KeywordView.visibility = View.GONE
                     save_Btn.visibility = View.VISIBLE
@@ -190,18 +303,15 @@ class DiaryDayView : AppCompatActivity() {
         intent.putExtra("content",content)
         startActivityForResult(intent,100)
 
-    }
+    }//키워드 추출
 
+    //키워드 추출 후 키워드 선택 창으로 넘어가기
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 100 -> {
-                    val intent = Intent(this, SelectKeyword::class.java)
-                    intent.putExtra("fname", fname)
-                    intent.putExtra("uid",fbAuth?.uid.toString())
-                    startActivity(intent)
-                    finish()
+                    this.checkedDay(fname)
                 }
             }
         }

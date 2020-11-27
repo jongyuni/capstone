@@ -3,13 +3,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height = "match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     android:background="@drawable/background">
 
+    <ImageView
+        android:id="@+id/LogoView"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="60dp"
+        android:src="@drawable/toplogo"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -18,12 +25,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="#2C2B2C"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:fontFamily="@font/kyobo"
-            /><!--날짜 표시-->
+            android:fontFamily="@font/kyobo" /><!--날짜 표시-->
 
         <ImageView
             android:id="@+id/imageView"
@@ -31,7 +39,8 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:visibility="invisible"
+            android:visibility="visible"
+            android:src="@drawable/basicimage"
             /><!--저장된 이미지 출력-->
 
         <TextView
@@ -44,39 +53,60 @@
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:fontFamily="@font/kyobo"
             android:textColor="#9C999C"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:onClick="onClick"
+            android:clickable="true"
             /><!--키워드 뷰-->
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
         <EditText
             android:id="@+id/contextEditText"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="180dp"
-            android:layout_gravity="top"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:ems="10"
+            android:layout_gravity="center"
+            android:gravity="top"
             android:hint="오늘은 어떤 하루를 보냈나요?"
             android:inputType="textMultiLine"
             android:visibility="invisible"
-            android:fontFamily="@font/kyobo"
-            /><!--일기 작성 공간-->
+            android:fontFamily="@font/kyobo" /><!--일기 작성 공간-->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/save_Btn"
+                android:text="저장"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="@drawable/buttonimage"
+                android:visibility="invisible"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/kyobo"/><!--저장 버튼-->
+
+            <Button
+                android:id="@+id/keyword_Btn"
+                android:text="키워드 추출"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="@drawable/buttonimage"
+                android:visibility="invisible"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/kyobo"/><!--키워드 버튼-->
+
+        </LinearLayout>
 
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="350dp"
             android:layout_height="180dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center">
 
             <TextView
@@ -93,42 +123,13 @@
                 android:visibility="gone" /><!--저장된 일기 출력-->
         </ScrollView>
 
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/save_Btn"
-            android:text="저장"
-            android:layout_width="150dp"
-            android:layout_height="60dp"
-            android:background="@drawable/buttonimage"
-            android:visibility="invisible"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:fontFamily="@font/kyobo"/><!--저장 버튼-->
-
-        <Button
-            android:id="@+id/keyword_Btn"
-            android:text="키워드 추출"
-            android:layout_width="150dp"
-            android:layout_height="60dp"
-            android:background="@drawable/buttonimage"
-            android:visibility="invisible"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:fontFamily="@font/kyobo"/><!--키워드 버튼-->
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
         <Button
             android:id="@+id/mod_Btn"

@@ -1,11 +1,6 @@
 package com.example.draw4u.ui.dashboard;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,27 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.draw4u.DiaryDayView;
-import com.example.draw4u.DiaryInfo;
 import com.example.draw4u.R;
 import com.example.draw4u.ResultDiary;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
+
 import java.util.ArrayList;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
-
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     private static ArrayList<ResultDiary> mDataset;
-    public MyAdapter(ArrayList<ResultDiary> searchDataSet) {
-            mDataset = searchDataSet;
-            }
+    public MyAdapter(ArrayList<ResultDiary> searchDataSet) { mDataset = searchDataSet; }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
@@ -48,17 +34,39 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String keywords = null;
         holder.dateView.setText(mDataset.get(position).getResultdiary().getDate());
-        String keywords = "#" + mDataset.get(position).getResultdiary().getKeyword1() + " #"
-                + mDataset.get(position).getResultdiary().getKeyword2()
-                + " #" + mDataset.get(position).getResultdiary().getKeyword3();
+        if(mDataset.get(position).getResultdiary().getKeyword1() == null){
+            keywords = "  ";
+        }
+        else{
+            keywords = "#" + mDataset.get(position).getResultdiary().getKeyword1();
+        }
+        if(mDataset.get(position).getResultdiary().getKeyword2() == null){
+            keywords = keywords + "";
+        }
+        else{
+            keywords = keywords
+                    +" #" + mDataset.get(position).getResultdiary().getKeyword2();
+        }
+        if(mDataset.get(position).getResultdiary().getKeyword3() == null){
+            keywords = keywords + "";
+        }
+        else{
+            keywords = keywords
+                    +" #" + mDataset.get(position).getResultdiary().getKeyword3();
+        }
+
         holder.keywordView.setText(keywords);
+        Glide.with(holder.imageView.getContext())
+                .load(mDataset.get(position).getResultdiary().getImageURL())
+                .into(holder.imageView);//이미지 출력
     }
 
     @Override
     public int getItemCount() {
             return mDataset.size();
-            }
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 

@@ -35,7 +35,6 @@ class SelectKeyword : AppCompatActivity() {
     var fbFirestore : FirebaseFirestore? = null
 
     var fname: String = "" //일기 저장을 위한 파일 이름 - 날짜 형식
-    var uid: String =""
 
     var keyword1: String = ""
     var keyword2: String = ""
@@ -47,6 +46,7 @@ class SelectKeyword : AppCompatActivity() {
             supportActionBar?.hide()
         setContentView(R.layout.activity_select_keyword)
 
+        fbAuth = FirebaseAuth.getInstance()
         fbFirestore = FirebaseFirestore.getInstance()
 
         if(intent.hasExtra("fname")){
@@ -55,13 +55,8 @@ class SelectKeyword : AppCompatActivity() {
             Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
         }//파일 이름
 
-        if(intent.hasExtra("uid")){
-            uid = intent.getStringExtra("uid").toString()
-        }else{
-            Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
-        }//유저 정보
 
-        fbFirestore?.collection(uid)?.document(fname)?.get()
+        fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.get()
             ?.addOnSuccessListener { document ->
                 val tempdiaryinfo =  document.toObject(DiaryInfo::class.java)
 
@@ -69,7 +64,6 @@ class SelectKeyword : AppCompatActivity() {
                     this.keyword1 = tempdiaryinfo.keyword1.toString()
                     this.keyword2 = tempdiaryinfo.keyword2.toString()
                     this.keyword3 = tempdiaryinfo.keyword3.toString()
-                    Log.d("CometChatAPI::", this.keyword1)
                     Keyword1.setText(this.keyword1)
                     Keyword2.setText(this.keyword2)
                     Keyword3.setText(this.keyword3)

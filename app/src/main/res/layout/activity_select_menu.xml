@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/background"
-    tools:context=".SelectImage">
+    tools:context=".SelectMenu">
 
     <ImageView
         android:id="@+id/imageView"
@@ -16,29 +16,21 @@
         android:layout_marginLeft="60dp"
         android:src="@drawable/toplogo"/>
 
-    <ImageView
-        android:id="@+id/imgTranslate"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/basicimage"/>
-
     <Button
-        android:id="@+id/btn_down"
-        android:text="그려진 이미지 보기"
+        android:id="@+id/btn_imageFromKeyword"
+        android:text="키워드로 그림보기"
         android:layout_width="170dp"
         android:layout_height="60dp"
         android:background="@drawable/buttonimage"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="100dp"
         android:textSize="20dp"
         android:textStyle="bold"
         android:fontFamily="@font/kyobo"/>
 
     <Button
-        android:id="@+id/btn_sel"
-        android:text="이미지 선택하기"
+        android:id="@+id/btn_directDraw"
+        android:text="직접 그리기"
         android:layout_width="170dp"
         android:layout_height="60dp"
         android:background="@drawable/buttonimage"
@@ -49,8 +41,8 @@
         android:fontFamily="@font/kyobo"/>
 
     <Button
-        android:id="@+id/btn_no"
-        android:text="아니오"
+        android:id="@+id/btn_imageFromPhone"
+        android:text="앨범에서 가져오기"
         android:layout_width="170dp"
         android:layout_height="60dp"
         android:background="@drawable/buttonimage"
@@ -61,15 +53,15 @@
         android:fontFamily="@font/kyobo"/>
 
     <Button
-        android:id="@+id/btn_random"
-        android:text="랜덤 그림"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/btn_return"
+        android:text="돌아가기"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:background="@drawable/buttonimage"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="#00ff0000"
-        android:textSize="15sp"
-        android:fontFamily="@font/kyobo" />
-
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/kyobo"/>
 
 </LinearLayout>

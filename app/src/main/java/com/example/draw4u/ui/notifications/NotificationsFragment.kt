@@ -27,6 +27,7 @@ class NotificationsFragment : Fragment() {
              //(activity as LoginActivity).signOut()
              MySharedPreferences.clearUser(activity)
              startActivity(Intent(activity, LoginActivity::class.java))
+             activity?.finish()
          }
     return root
   }

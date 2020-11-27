@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SelectImage"></activity>
+        <activity android:name=".SelectMenu"></activity>
+        <activity android:name=".SelectImage" />
         <activity android:name=".PhotoFromPhone" />
         <activity android:name=".DrawingActivity" />
         <activity android:name=".ExtractKeyword" />

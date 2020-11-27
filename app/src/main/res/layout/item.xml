@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
-        android:layout_width="match_parent"
+        android:layout_width="370dp"
         android:layout_height="80dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
@@ -16,6 +17,11 @@
         app:layout_constraintTop_toTopOf="parent"
         android:onClick="onCardViewClicked"
         android:clickable="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/navigation_color_profile"/>
+
         <ImageView
             android:id="@+id/image"
             android:layout_width="50dp"
@@ -31,8 +37,12 @@
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
                 android:text="날짜"
                 android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/kyobo"
+                android:background="#00ff0000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -42,6 +52,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="키워드"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/kyobo"
+                android:background="#00ff0000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/date" />

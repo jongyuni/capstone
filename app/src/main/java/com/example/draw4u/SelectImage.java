@@ -55,10 +55,12 @@ public class SelectImage extends AppCompatActivity {
     Button mDown;
     ImageView mImgTrans;
     Bitmap mBitmap;
-    Button phoneImage;
     Button selGan;
+    Button btn_no;
+    Button btn_random;
     public String fname;
     public String keyword;
+    String image_url = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +75,13 @@ public class SelectImage extends AppCompatActivity {
 
         mDown = (Button) findViewById(R.id.btn_down);
         mImgTrans = (ImageView) findViewById(R.id.imgTranslate);
-        phoneImage = (Button) findViewById(R.id.btn_imageFromPhone);
         selGan = (Button) findViewById(R.id.btn_sel);
+        btn_random = (Button) findViewById(R.id.btn_random);
+        btn_no = (Button) findViewById(R.id.btn_no);
 
-        //String image_url ="https://storage.googleapis.com/artlab-public.appspot.com/stencils/selman/line-01.svg";
-        String image_url = "http://34.64.108.156:8000/picture/" + keyword.toString();
-        //String image_url = "https://www.dhnews.co.kr/news/photo/202001/117807_120078_3021.jpg";
+        image_url = "http://34.64.108.156:8000/picture/" + keyword.toString();
+        LoadImage loadImage = (LoadImage) new LoadImage();
+        loadImage.execute(image_url);
 
         mDown.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -87,6 +90,7 @@ public class SelectImage extends AppCompatActivity {
 
             }
         });
+
         selGan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,14 +102,22 @@ public class SelectImage extends AppCompatActivity {
 
             }
         });
-        phoneImage.setOnClickListener(new View.OnClickListener() {
+        btn_no.setOnClickListener(new View.OnClickListener(){
+
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), PhotoFromPhone.class);
+                Intent intent = new Intent(v.getContext(),SelectMenu.class);
                 intent.putExtra("fname",fname);
                 startActivity(intent);
                 finish();
-
+            }
+        });
+        btn_random.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                image_url = image_url + "/random";
+                new LoadImage()
+                        .execute(image_url);
             }
         });
 
