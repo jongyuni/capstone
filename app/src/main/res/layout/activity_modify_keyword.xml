@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/colorWhite">
@@ -30,7 +30,21 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/EditKeyword"
+            android:id="@+id/EditKeyword1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_marginBottom="5dp"
+            android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/EditKeyword2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_marginBottom="5dp"
+            android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/EditKeyword3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

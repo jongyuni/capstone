@@ -91,66 +91,46 @@ class DiaryDayView : AppCompatActivity() {
         KeywordView.setOnClickListener(){//키워드 수정시
             val builder = AlertDialog.Builder(this)
             val dialogView = layoutInflater.inflate(R.layout.activity_modify_keyword, null)
-            val dialogText = dialogView.findViewById<EditText>(R.id.EditKeyword)
-            dialogText.setText(keyword)
+            val dialogText1 = dialogView.findViewById<EditText>(R.id.EditKeyword1)
+            val dialogText2 = dialogView.findViewById<EditText>(R.id.EditKeyword2)
+            val dialogText3 = dialogView.findViewById<EditText>(R.id.EditKeyword3)
+            dialogText1.setText(tempdiaryinfo.keyword1)
+            dialogText2.setText(tempdiaryinfo.keyword2)
+            dialogText3.setText(tempdiaryinfo.keyword3)
 
             builder.setView(dialogView)
                 .setPositiveButton("저장"){dialogInterface, i ->
-                    var input = dialogText.text.toString()
-                    var token = input.split('#',' ')
-                    //키워드 수정하여 저장
+                    var input1 = dialogText1.text.toString()
+                    var input2 = dialogText2.text.toString()
+                    var input3 = dialogText3.text.toString()
 
-                    //키워드 재설정
-                    if(token.size.toInt() > 4){
-                        if(token[1].isNullOrEmpty()){
-                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",null)
-                        }
-                        else{
-                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",token[1])
-                            keyword = "#" + token[1]
-                        }
-                        if(token[3].isNullOrEmpty()){
-                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",null)
-                        }
-                        else{
-                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",token[3])
-                            keyword = keyword + " #" + token[3]
-                        }
-                        if(token[5].isNullOrEmpty()){
-                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword3",null)
-                        }
-                        else{
-                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword3",token[5])
-                            keyword = keyword + " #" + token[5]
-                        }
+                    if(input1.isNullOrEmpty()){
+                        tempdiaryinfo.keyword1 = null
+                        fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",null)
+                        keyword = ""
                     }
-                    else if(token.size.toInt() > 2){
-                        if(token[1].isNullOrEmpty()){
-                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",null)
-                        }
-                        else{
-                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",token[1])
-                            keyword = "#" + token[1]
-                        }
-                        if(token[3].isNullOrEmpty()){
-                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",null)
-                        }
-                        else{
-                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",token[3])
-                            keyword = keyword + " #" + token[3]
-                        }
-                        fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword3",null)
+                    else {
+                        tempdiaryinfo.keyword1 = input1.trim()
+                        fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",input1.trim())
+                        keyword = "#" + input1
                     }
-                    else if(token.size.toInt() > 0){
-                        if(token[1].isNullOrEmpty()){
-                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",null)
-                        }
-                        else{
-                            fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",token[1])
-                            keyword = "#" + token[1]
-                        }
+                    if(input2.isNullOrEmpty()){
+                        tempdiaryinfo.keyword2 = null
                         fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",null)
+                    }
+                    else {
+                        tempdiaryinfo.keyword2 = input2.trim()
+                        fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",input2.trim())
+                        keyword = keyword + " #" + input2
+                    }
+                    if(input3.isNullOrEmpty()){
+                        tempdiaryinfo.keyword3 = null
                         fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword3",null)
+                    }
+                    else {
+                        tempdiaryinfo.keyword3 = input3.trim()
+                        fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword3",input3.trim())
+                        keyword = keyword + " #" + input3
                     }
 
                     KeywordView.text = "${keyword}"
@@ -159,7 +139,7 @@ class DiaryDayView : AppCompatActivity() {
 
                 }
                 .setNegativeButton("취소"){dialogInterface, i ->}
-                .setNeutralButton("삭제"){dialogInterface, i ->
+                .setNeutralButton("전체 삭제"){dialogInterface, i ->
                     fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",null)
                     fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",null)
                     fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword3",null)
@@ -172,7 +152,7 @@ class DiaryDayView : AppCompatActivity() {
 
         imageView.setOnClickListener(){
             val builder = AlertDialog.Builder(this)
-            builder.setMessage("그림을 넣으시겠습니까?")
+            builder.setMessage("그림을 수정하시겠습니까?")
                 .setNeutralButton("네"){dialogInterface, i ->
                     val intent = Intent(this, SelectMenu::class.java)
                     intent.putExtra("fname", fname)

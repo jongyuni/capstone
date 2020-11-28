@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -61,12 +62,30 @@ class SelectKeyword : AppCompatActivity() {
                 val tempdiaryinfo =  document.toObject(DiaryInfo::class.java)
 
                 if (tempdiaryinfo != null) {//이미 씌여진 일기가 있다면
-                    this.keyword1 = tempdiaryinfo.keyword1.toString()
-                    this.keyword2 = tempdiaryinfo.keyword2.toString()
-                    this.keyword3 = tempdiaryinfo.keyword3.toString()
-                    Keyword1.setText(this.keyword1)
-                    Keyword2.setText(this.keyword2)
-                    Keyword3.setText(this.keyword3)
+                    if(tempdiaryinfo.keyword1.isNullOrEmpty()){
+                        Keyword1.visibility = View.GONE
+                    }
+                    else{
+                        this.keyword1 = tempdiaryinfo.keyword1.toString()
+                        Keyword1.visibility = View.VISIBLE
+                        Keyword1.setText(this.keyword1)
+                    }
+                    if(tempdiaryinfo.keyword2.isNullOrEmpty()){
+                        Keyword2.visibility = View.GONE
+                    }
+                    else{
+                        this.keyword2 = tempdiaryinfo.keyword2.toString()
+                        Keyword2.visibility = View.VISIBLE
+                        Keyword2.setText(this.keyword2)
+                    }
+                    if(tempdiaryinfo.keyword3.isNullOrEmpty()){
+                        Keyword3.visibility = View.GONE
+                    }
+                    else{
+                        this.keyword3 = tempdiaryinfo.keyword3.toString()
+                        Keyword3.visibility = View.VISIBLE
+                        Keyword3.setText(this.keyword3)
+                    }
 
                 }//키워드 저장
                 else{
@@ -98,6 +117,12 @@ class SelectKeyword : AppCompatActivity() {
             val intent = Intent(this,SelectImage::class.java)
             intent.putExtra("fname",fname)
             intent.putExtra("keyword",this.keyword3)
+            startActivity(intent)
+            finish()
+        }
+        return_btn.setOnClickListener(){
+            val intent = Intent(this, SelectMenu::class.java)
+            intent.putExtra("fname", fname)
             startActivity(intent)
             finish()
         }

@@ -53,6 +53,7 @@ public class DashboardFragment extends Fragment {
         mRecyclerView.scrollToPosition(0);
         mAdapter = new MyAdapter(diaryInfos);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new RecyclerViewDecoration(-33));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
 

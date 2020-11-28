@@ -1,6 +1,8 @@
 package com.example.draw4u.ui.dashboard;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.example.draw4u.ResultDiary;
 
 import java.util.ArrayList;
 
+import static androidx.core.content.ContextCompat.getColor;
 import static androidx.core.content.ContextCompat.startActivity;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
@@ -34,30 +37,38 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String keywords = null;
+        String keyword1 = null;
+        String keyword2 = null;
+        String keyword3 = null;
         holder.dateView.setText(mDataset.get(position).getResultdiary().getDate());
         if(mDataset.get(position).getResultdiary().getKeyword1() == null){
-            keywords = "  ";
+            keyword1 = "";
+            holder.keywordView1.setVisibility(View.GONE);
         }
         else{
-            keywords = "#" + mDataset.get(position).getResultdiary().getKeyword1();
+            keyword1 = "#" + mDataset.get(position).getResultdiary().getKeyword1();
+            holder.keywordView1.setVisibility(View.VISIBLE);
         }
         if(mDataset.get(position).getResultdiary().getKeyword2() == null){
-            keywords = keywords + "";
+            keyword2 = "";
+            holder.keywordView2.setVisibility(View.GONE);
         }
         else{
-            keywords = keywords
-                    +" #" + mDataset.get(position).getResultdiary().getKeyword2();
+            keyword2 = "#" + mDataset.get(position).getResultdiary().getKeyword2();
+            holder.keywordView2.setVisibility(View.VISIBLE);
         }
         if(mDataset.get(position).getResultdiary().getKeyword3() == null){
-            keywords = keywords + "";
+            keyword3 = "";
+            holder.keywordView3.setVisibility(View.GONE);
         }
         else{
-            keywords = keywords
-                    +" #" + mDataset.get(position).getResultdiary().getKeyword3();
+            keyword3 = "#" + mDataset.get(position).getResultdiary().getKeyword3();
+            holder.keywordView3.setVisibility(View.VISIBLE);
         }
 
-        holder.keywordView.setText(keywords);
+        holder.keywordView1.setText(keyword1);
+        holder.keywordView2.setText(keyword2);
+        holder.keywordView3.setText(keyword3);
         Glide.with(holder.imageView.getContext())
                 .load(mDataset.get(position).getResultdiary().getImageURL())
                 .into(holder.imageView);//이미지 출력
@@ -72,15 +83,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
         public ImageView imageView;
         public TextView dateView;
-        public TextView keywordView;
+        public TextView keywordView1;
+        public TextView keywordView2;
+        public TextView keywordView3;
+
         public CardView cv;
 
         public ViewHolder(View view) {
             super(view);
             imageView = (ImageView) view.findViewById(R.id.image);
             dateView = (TextView) view.findViewById(R.id.date);
-            keywordView = (TextView) view.findViewById(R.id.keywords);
+            keywordView1 = (TextView) view.findViewById(R.id.keyword1);
+            keywordView2 = (TextView) view.findViewById(R.id.keyword2);
+            keywordView3 = (TextView) view.findViewById(R.id.keyword3);
             cv = (CardView) view.findViewById(R.id.cardview);
+            cv.setBackgroundColor(Color.argb(0,0,0,0));
 
             cv.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -42,7 +42,8 @@
                 android:textSize="20dp"
                 android:layout_marginTop="30dp"
                 android:textStyle="bold"
-                android:fontFamily="@font/kyobo"/>
+                android:fontFamily="@font/kyobo"
+                android:visibility="visible"/>
 
             <Button
                 android:id="@+id/Keyword2"
@@ -54,7 +55,8 @@
                 android:textSize="20dp"
                 android:layout_marginTop="30dp"
                 android:textStyle="bold"
-                android:fontFamily="@font/kyobo" />
+                android:fontFamily="@font/kyobo"
+                android:visibility="visible"/>
 
             <Button
                 android:id="@+id/Keyword3"
@@ -66,7 +68,20 @@
                 android:textSize="20dp"
                 android:layout_marginTop="30dp"
                 android:textStyle="bold"
-                android:fontFamily="@font/kyobo"/>
+                android:fontFamily="@font/kyobo"
+                android:visibility="visible"/>
+
+        <Button
+            android:id="@+id/return_btn"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonimage"
+            android:text="돌아가기"
+            android:textSize="20dp"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/kyobo" />
 </LinearLayout>
 
 
