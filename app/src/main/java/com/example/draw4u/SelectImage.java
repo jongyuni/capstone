@@ -115,9 +115,8 @@ public class SelectImage extends AppCompatActivity {
         btn_random.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                image_url = image_url + "/random";
                 new LoadImage()
-                        .execute(image_url);
+                        .execute(image_url + "/random");
             }
         });
 

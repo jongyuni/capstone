@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -46,11 +47,15 @@ class DiaryDayView : AppCompatActivity() {
             Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
         }//일기 날짜 저장
 
+        KeywordView.isEnabled = false //키워드 수정 창 안 열리게
+        imageView.isEnabled = false //이미지 수정 창 안 열리게
         dateView.text = String.format(fname)
         contextEditText.setText("") // EditText에 공백값 넣기
         checkedDay(fname) //일기 써있는지 확인
 
         save_Btn.setOnClickListener{// 저장 Button이 클릭되면
+            KeywordView.isEnabled = false
+            imageView.isEnabled = false
             saveDiary(fname) // saveDiary 메소드 호출
             str = contextEditText.getText().toString() // str 변수에 edittext내용을 toString형으로 저장
             diaryView.text = "${str}" // textView에 str 출력
@@ -66,6 +71,8 @@ class DiaryDayView : AppCompatActivity() {
         }//일기 저장 버튼 클릭시
 
         keyword_Btn.setOnClickListener {//키워드 추출 Button이 클릭되면
+            KeywordView.isEnabled = false
+            imageView.isEnabled = false
             saveDiary(fname)// saveDiary 메소드 호출
             makeKeyword(fname) //keyword 추출 메소드 호출
             str = contextEditText.getText().toString() // str 변수에 edittext내용을 toString형으로 저장
@@ -156,7 +163,7 @@ class DiaryDayView : AppCompatActivity() {
                     fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword1",null)
                     fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword2",null)
                     fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.update("keyword3",null)
-                    
+
                     KeywordView.visibility = View.INVISIBLE
                     //키워드 재설정
                 }
@@ -175,12 +182,11 @@ class DiaryDayView : AppCompatActivity() {
                 }
                 .setNegativeButton("아니오"){dialogInterface, i ->}
                 .show()
-        }
+        }//이미지 수정 및 추가
 
     }
 
     fun checkedDay(fname: String) {
-
 
         fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.get()
             ?.addOnSuccessListener { documentSnapshot ->
@@ -191,12 +197,11 @@ class DiaryDayView : AppCompatActivity() {
                     diaryView.visibility = View.VISIBLE
                     diaryView.text = "${str}" // textView에 str 출력
                     imageView.visibility = View.VISIBLE
-                    if(diaryinfo.imageURL.isNullOrEmpty()){ }
+                    if(diaryinfo.imageURL.isNullOrEmpty()){}
                     else{
                         tempdiaryinfo.imageURL = diaryinfo.imageURL
                         Glide.with(this).load(diaryinfo.imageURL).into(imageView)//이미지 출력
                     }
-
                     tempdiaryinfo.diary =str
                     tempdiaryinfo.keyword1 = diaryinfo.keyword1
                     tempdiaryinfo.keyword2 = diaryinfo.keyword2
@@ -225,8 +230,11 @@ class DiaryDayView : AppCompatActivity() {
                     mod_Btn.visibility = View.VISIBLE
                     del_Btn.visibility = View.VISIBLE
 
+                    //수정 버튼 누르면
                     mod_Btn.setOnClickListener {
-                        KeywordView.visibility = View.GONE
+                        KeywordView.isEnabled = true
+                        imageView.isEnabled = true
+                        KeywordView.visibility = View.VISIBLE
                         diaryView.visibility = View.GONE
                         scrollView.visibility = View.GONE
                         contextEditText.visibility = View.VISIBLE
@@ -238,10 +246,11 @@ class DiaryDayView : AppCompatActivity() {
                         diaryView.text = "${contextEditText.getText()}"
                     }// 수정 버튼을 누를 시
 
+                    //삭제 버튼 누르면
                     del_Btn.setOnClickListener {
                         val builder = AlertDialog.Builder(this)
                         val dialogView = layoutInflater.inflate(R.layout.activity_delete_check, null)
-
+                        //삭제할지 물어봄
                         builder.setView(dialogView)
                             .setPositiveButton("확인"){dialogInterface, i ->
                                 KeywordView.visibility = View.INVISIBLE
@@ -254,14 +263,12 @@ class DiaryDayView : AppCompatActivity() {
                                 mod_Btn.visibility = View.GONE
                                 del_Btn.visibility = View.GONE
                                 removeDiary(fname)
-                            }
-                            .setNegativeButton("취소"){dialogInterface, i ->
-                            }
-                            .show()
-
+                            }//삭제 확인 누르면
+                            .setNegativeButton("취소"){dialogInterface, i -> }//취소 누르면
+                            .show()//삭제할지 묻는 창
                     }//삭제 버튼 클릭시
                 }//저장된 일기가 있을때
-                else{
+                else{//저장된 일기가 없을때
                     str = ""
                     diaryView.visibility = View.GONE
                     KeywordView.visibility = View.GONE
@@ -278,7 +285,7 @@ class DiaryDayView : AppCompatActivity() {
     }//저장된 일기 확인
 
     @SuppressLint("WrongConstant")
-    fun saveDiary(readyDay: String) {
+    fun saveDiary(readyDay: String) {//일기 저장
 
         var content: String = contextEditText.getText().toString()
 
@@ -289,29 +296,29 @@ class DiaryDayView : AppCompatActivity() {
     }//일기 저장
 
     @SuppressLint("WrongConstant")
-    fun removeDiary(readyDay: String) {
+    fun removeDiary(readyDay: String) {//일기 삭제
 
         fbFirestore?.collection(fbAuth?.uid.toString())?.document(fname)?.delete()
 
     }//일기 삭제
 
-    fun makeKeyword(fname: String){
+    fun makeKeyword(fname: String){//키워드 추출
 
         var content: String = contextEditText.getText().toString()
         val intent = Intent(this,ExtractKeyword::class.java)
         intent.putExtra("fname", fname)
         intent.putExtra("content",content)
-        startActivityForResult(intent,100)
+        startActivityForResult(intent,100)//키워드 추출 완료되면 
 
     }//키워드 추출
 
-    //키워드 추출 후 키워드 선택 창으로 넘어가기
+    //키워드 추출 완료되면
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 100 -> {
-                    this.checkedDay(fname)
+                    this.checkedDay(fname)//키워드 업데이트
                 }
             }
         }
